@@ -1,4 +1,6 @@
 #include "DxLib.h"
+#include "../../Input/Input.h"
+#include "../../Scene/SceneManager.h"
 
 int g_OptionBGHandle = -1;
 int g_OptionTextHandle = -1;
@@ -17,10 +19,10 @@ void InitOptionScene()
 
 void UpdateOptionScene()
 {
-	/*if (IsTriggerKey(KEY_C))
+	if (IsTriggerKey(KEY_C))
 	{
 		ChangeScene(SCENE_TITLE);
-	}*/
+	}
 }
 
 void DrawOptionScene()

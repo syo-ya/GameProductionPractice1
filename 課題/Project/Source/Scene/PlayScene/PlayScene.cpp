@@ -1,4 +1,6 @@
 #include "DxLib.h"
+#include "../../Input/Input.h"
+#include "../../Scene/SceneManager.h"
 
 // グローバル変数宣言
 int g_BGHandle;
@@ -11,9 +13,10 @@ void InitPlayScene()
 
 void UpdatePlayScene()
 {
-	if (CheckHitKey(KEY_INPUT_C))
+	if (IsTriggerKey(KEY_C))
 	{
 		// シーンの切り替え処理　チェンジシーン（タイトルシーン）；
+		ChangeScene(SCENE_TITLE);
 	}
 }
 
