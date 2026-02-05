@@ -1,17 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Source">
+      <UniqueIdentifier>{23f7839e-b87d-44c8-8351-a35b73c6981b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Source\Scene">
+      <UniqueIdentifier>{2220519c-a53c-4820-b09b-c893b11d3aa8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Source\Scene\TitleScene">
+      <UniqueIdentifier>{5950d4d1-e08c-43f7-9440-23d0fdf3eb90}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Scene\PlayScene">
+      <UniqueIdentifier>{28a3517a-2faf-4a64-aa61-4d00891d42bc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source\Scene\OptionScene">
+      <UniqueIdentifier>{dc4095ab-0ab0-4cff-8a0e-b14b4a8235c7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source\Main.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\SceneManager.cpp">
+      <Filter>Source\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\OptionScene\OptionScene.cpp">
+      <Filter>Source\Scene\OptionScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\PlayScene\PlayScene.cpp">
+      <Filter>Source\Scene\PlayScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Scene\TitleScene\TitleScene.cpp">
+      <Filter>Source\Scene\TitleScene</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Source\Scene\SceneManager.h">
+      <Filter>Source\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\OptionScene\OptionScene.h">
+      <Filter>Source\Scene\OptionScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\PlayScene\PlayScene.h">
+      <Filter>Source\Scene\PlayScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Scene\TitleScene\TitleScene.h">
+      <Filter>Source\Scene\TitleScene</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
