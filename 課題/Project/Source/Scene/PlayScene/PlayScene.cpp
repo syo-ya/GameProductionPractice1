@@ -4,18 +4,28 @@
 
 // グローバル変数宣言
 int g_BGHandle;
+int g_PlayerHandle;
+int g_EnemyDragonFlyHandle;
+int g_EnemyFliesHandle;
 
 void InitPlayScene()
 {
 	// 背景画像の読み込み
 	g_BGHandle = LoadGraph("Data/Play/BG.png");
+
+	// プレイヤー画像の読み込み
+	g_PlayerHandle = LoadGraph("Data/Player/Player.png");
+
+	// 敵画像の読み込み
+	g_EnemyDragonFlyHandle = LoadGraph("Data/Enemy/DragonFly.png");
+	g_EnemyFliesHandle = LoadGraph("Data/Enemy/Flies.png");
 }
 
 void UpdatePlayScene()
 {
 	if (IsTriggerKey(KEY_C))
 	{
-		// シーンの切り替え処理　チェンジシーン（タイトルシーン）；
+		// シーンの切り替え処理
 		ChangeScene(SCENE_TITLE);
 	}
 }
@@ -24,12 +34,24 @@ void DrawPlayScene()
 {
 	// 背景画像の描画
 	DrawGraph(0, 0, g_BGHandle, TRUE);
-	// テキストの描画
-	DrawString(100, 100, "ゲームシーンです。Cキーでタイトルシーンに戻れます。", GetColor(255, 255, 255));
+
+	// プレイヤー画像の描画
+	DrawGraph(400, 300, g_PlayerHandle, TRUE);
+
+	// 敵画像の描画
+	DrawGraph(600, 400, g_EnemyDragonFlyHandle, TRUE);
+	DrawGraph(200, 500, g_EnemyFliesHandle, TRUE);
 }
 
 void FinPlayScene()
 {
 	// 背景画像の解放
 	DeleteGraph(g_BGHandle);
+
+	// プレイヤー画像の解放
+	DeleteGraph(g_PlayerHandle);
+
+	// 敵画像の解放
+	DeleteGraph(g_EnemyDragonFlyHandle);
+	DeleteGraph(g_EnemyFliesHandle);
 }
