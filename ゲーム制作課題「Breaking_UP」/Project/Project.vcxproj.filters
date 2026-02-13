@@ -69,9 +69,6 @@
     <ClCompile Include="Source\FPS\FPS.cpp">
       <Filter>Source\FPS</Filter>
     </ClCompile>
-    <ClCompile Include="Source\GameSetting\GameSetting.cpp">
-      <Filter>Source\GameSetting</Filter>
-    </ClCompile>
     <ClCompile Include="Source\Input\Input.cpp">
       <Filter>Source\Input</Filter>
     </ClCompile>
