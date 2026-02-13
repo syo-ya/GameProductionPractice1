@@ -7,3 +7,7 @@
 #define TRANS_COLOR_R (1)
 #define TRANS_COLOR_G (100)
 #define TRANS_COLOR_B (2)
+
+#define BACK_GROUND_COLOR_R (180)
+#define BACK_GROUND_COLOR_G (100)
+#define BACK_GROUND_COLOR_B (100)

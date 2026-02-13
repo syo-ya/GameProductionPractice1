@@ -1,64 +1,60 @@
-#include "DxLib.h"
+#include "DXLib.h"
 #include "GameSetting/GameSetting.h"
 #include "Input/Input.h"
 #include "Scene/SceneManager.h"
+#include "FPS/FPS.h"
+#include "Sound/Sound.h"
 
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 {
-	// ウィンドウモードON
 	ChangeWindowMode(TRUE);
 
-	SetMainWindowText("Breaking UP");
-
-	// 画面解像度の設定
 	SetGraphMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_COLOR_DEPTH);
 
-	if (DxLib_Init() == -1)		// ＤＸライブラリ初期化処理
+	if (DxLib_Init() == -1)
 	{
-		return -1;			// エラーが起きたら直ちに終了
+		return -1;
 	}
 
-	// ウィンドウサイズ設定
 	SetWindowSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-	// 透過色の設定
 	SetTransColor(TRANS_COLOR_R, TRANS_COLOR_G, TRANS_COLOR_B);
 
-	// 描画先を裏画面にする
 	SetDrawScreen(DX_SCREEN_BACK);
 
-	// 入力システムを初期化
+	SetBackgroundColor(BACK_GROUND_COLOR_R, BACK_GROUND_COLOR_G, BACK_GROUND_COLOR_B);
+
+	SetFontSize(20);
+
+	InitFPS();
+
 	InitInput();
 
-	// ゲームのメインループ
 	while (ProcessMessage() >= 0)
 	{
-		// ループ処理前に1ミリ秒止めると処理が安定する
 		Sleep(1);
 
-		// 画面をクリア
 		ClearDrawScreen();
 
-		// 入力を更新
 		UpdateInput();
 
-		// シーン管理の更新
 		//SceneManagerUpdate();
 
-		// 入力システムの描画
-		DrawInput();
-
-		// エスケープキーで終了
 		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;
 
-		// 画面フリップ
+		UpdateFPS();
+
+		DrawFPS();
+
+		FPSWait();
+
 		ScreenFlip();
 	}
 
-	// 入力システムの終了
 	FinInput();
 
-	DxLib_End();				// ＤＸライブラリ使用の終了処理
+	DxLib_End();
 
-	return 0;				// ソフトの終了 
+	return 0;
+
 }
