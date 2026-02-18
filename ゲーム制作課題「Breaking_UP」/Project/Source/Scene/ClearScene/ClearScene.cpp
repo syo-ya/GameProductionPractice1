@@ -1,40 +1,55 @@
 #include "DxLib.h"
 #include "ClearScene.h"
+//#include "../../BackGround/BackGround.h"
 #include "../../Input/Input.h"
 #include "../../Scene/SceneManager.h"
+#include <stdio.h>
 
-void InitClearScene()
+void InitGameClearScene()
 {
+	// 背景初期化
+	//InitBackGround();
 }
 
-void LoadClearScene()
+void LoadGameClearScene()
 {
+	// 背景ロード
+	//LoadBackGround("Data/GameClear/clear.PNG", BACK_GROUND_LAYER_1);
+	// 背景スクロール
+	//SetBackGroundMove(BACK_GROUND_SPEED, 0.0f, BACK_GROUND_LAYER_1);
 }
 
-void StartClearScene()
+void StartGameClearScene()
 {
+
 }
 
-void StepClearScene()
+void StepGameClearScene()
 {
-}
+	// 背景ステップ
+	//StepBackGround();
 
-void UpdateClearScene()
-{
 	// Zキーでタイトルに戻る
-    if (IsTriggerKey(KEY_SPACE))
-    {
-        ChangeScene(SCENE_TITLE);
-    }
+	if (IsTriggerKey(KEY_SPACE))
+	{
+		ChangeScene(SCENE_TITLE);
+	}
 }
 
-void DrawClearScene()
+void UpdateGameClearScene()
 {
-	// ゲームクリアのメッセージを描画
-	DrawString(700, 400, "ゲームクリア！！", GetColor(255, 255, 0));
-	DrawString(650, 500, "SPACEキーでタイトルへ戻る", GetColor(255, 255, 255));
+	// 背景更新
+	//UpdateBackGround();
 }
 
-void FinClearScene()
+void DrawGameClearScene()
 {
+	// 背景描画
+	//DrawBackGround();
+}
+
+void FinGameClearScene()
+{
+	// 背景終了
+	//FinBackGround();
 }
