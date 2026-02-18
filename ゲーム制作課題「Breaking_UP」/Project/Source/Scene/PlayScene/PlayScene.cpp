@@ -1,22 +1,21 @@
 #include "DxLib.h"
 #include "../../Player/Player.h"
-//#include "../../BackGround/BackGround.h"
 #include "../../Scene/SceneManager.h"
 //#include "../../Bullet/BulletManager.h"
 //#include "../../Enemy/EnemyManager.h"
 #include "../../Collision/Collision.h"
+#include "../../Map/MapManager.h"
+#include "../../Camera/Camera.h"
 
 // 背景のスピード
 #define BACK_GROUND_SPEED (-1.5f)
-
+int PlayBG = NULL;
 void InitPlayScene()
 {
-	// 背景初期化
-	//InitBackGround();
-
-	// プレイヤー初期化
-	//InitPlayer();
-
+	PlayBG = LoadGraph("Data/BackGround/PlayBG.png");
+	InitMap();
+	InitPlayer();
+	InitCamera();
 	// エネミー初期化
 	//InitEnemy();
 
@@ -26,13 +25,8 @@ void InitPlayScene()
 
 void LoadPlayScene()
 {
-	// 背景ロード
-	//LoadBackGround("Data/Play/play.PNG", BACK_GROUND_LAYER_1);
-	// 背景スクロール
-	//SetBackGroundMove(BACK_GROUND_SPEED, 0.0f, BACK_GROUND_LAYER_1);
-
-	// プレイヤーロード
-	//LoadPlayer();
+	LoadMap();
+	LoadPlayer();
 
 	// エネミーロード
 	//LoadEnemy();
@@ -43,17 +37,17 @@ void LoadPlayScene()
 
 void StartPlayScene()
 {
-	// プレイヤー開始
-	//StartPlayer();
+	StartMap();
+	StartPlayer();
 
 	//StepPlayer();
 }
 
 void StepPlayScene()
 {
-	//StepBackGround();
-	//StepPlayer();
-
+	StepMap();
+	StepPlayer();
+	StepCamera();
 	// まず敵出現システム
 	//StepEnemySpawnSystem();
 
@@ -66,11 +60,8 @@ void StepPlayScene()
 
 void UpdatePlayScene()
 {
-	// 背景更新
-	//UpdateBackGround();
-
-	// プレイヤー更新
-	//UpdatePlayer();
+	UpdateMap();
+	UpdatePlayer();
 
 	// エネミー更新
 	//UpdateEnemy();
@@ -78,23 +69,14 @@ void UpdatePlayScene()
 	// 弾更新
 	//UpdateBullet();
 
-	// 当たり判定
-	//CheckCollision();
-
-	// スコア更新
-	//UpdateScore();
-
-	// Kapuを２体撃破したらクリアシーンへ
-	/*if (GetEnemyDestroyNum(ENEMY_TYPE_MOZU) >= 2)
-	{
-		ChangeScene(SCENE_GAME_CLEAR);
-	}*/
+	CheckCollision();
 }
 
 void DrawPlayScene()
 {
-	// 背景描画
-	//DrawBackGround();
+	DrawGraph(0, 0, PlayBG, TRUE);
+	DrawCamera();
+	DrawMap();
 
 	// 弾描画
 	//DrawBullet();
@@ -102,17 +84,13 @@ void DrawPlayScene()
 	// エネミー描画
 	//DrawEnemy();
 
-	// プレイヤー描画
-	//DrawPlayer();
+	DrawPlayer();
 }
 
 void FinPlayScene()
 {
-	// 背景終了
-	//FinBackGround();
-
-	// プレイヤー終了
-	//FinPlayer();
+	FinMap();
+	FinPlayer();
 
 	// エネミー終了
 	//FinEnemy();

@@ -1,7 +1,7 @@
 #pragma once
 
 void InitMap();
-void LoadMap(int stage);
+void LoadMap();
 void StartMap();
 void StepMap();
 void UpdateMap();

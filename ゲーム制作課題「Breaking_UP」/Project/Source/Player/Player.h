@@ -3,7 +3,7 @@
 #include "../Animation/Animation.h"
 #include "../Collision/Collision.h"
 
-#define PLAYER_DEFAULT_POS_X (150.0f)
+#define PLAYER_DEFAULT_POS_X (550.0f)
 #define PLAYER_DEFAULT_POS_Y (785.0f)
 #define PLAYER_MOVE_POWER (0.5f)
 
@@ -52,5 +52,11 @@ void StepPlayer();
 void UpdatePlayer();
 void DrawPlayer();
 void FinPlayer();
+
+void GameOverPlayer();
+void GameClearPlayer();
+
+bool GameOverbool();
+bool GamePlayBool();
 
 PlayerData GetPlayer();

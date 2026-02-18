@@ -38,7 +38,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 		UpdateInput();
 
-		//SceneManagerUpdate();
+		SceneManagerUpdate();
 
 		if (CheckHitKey(KEY_INPUT_ESCAPE)) break;
 

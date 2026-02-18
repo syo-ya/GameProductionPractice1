@@ -20,7 +20,8 @@ void InitMapData()
 
 void LoadMapData()
 {
-	g_MapHandle[NORMAL_BLOCK] = LoadGraph("Data/Map/Block.png");
+	g_MapHandle[NORMAL_BLOCK] = LoadGraph("Data/Map/Normal_Block.png");
+	g_MapHandle[DESTROY_BLOCK] = LoadGraph("Data/Map/Destroy_Block/Block.png");
 	g_MapHandle[ONE_WAY_BLOCK] = LoadGraph("Data/Map/One_Way_Block.png");
 	g_MapHandle[NEEDLE_BLOCK] = LoadGraph("Data/Map/Needle_Block.png");
 	g_MapHandle[COIN] = LoadGraph("Data/Map/Coin/Coin.png");

@@ -4,7 +4,6 @@
 #include "../Player/Player.h"
 #include "../Map/MapParameter.h"
 #include "../GameSetting/GameSetting.h"
-#include "../Scene/Play/Select.h"
 
 #define SCROLL_CAMERA_SPEED (1.0f)
 #define CAMERA_SCROLL_START_Y (500.0f)
@@ -15,6 +14,8 @@ CameraData g_CameraData = { 0 };
 
 int Timer = 0;
 
+bool Scroll = false;
+
 void InitCamera()
 {
 	CAMERA_Y_MAX = (MAP_CHIP_Y_NUM * MAP_CHIP_HEIGHT - SCREEN_HEIGHT) * -1;
@@ -24,7 +25,7 @@ void InitCamera()
 
 void StepCamera()
 {
-	if (!Scroll())
+	if (!Scroll)
 	{
 		if (!GameOverbool())
 		{
@@ -48,7 +49,7 @@ void StepCamera()
 			}
 		}
 	}
-	else if (Scroll() && !GamePlayBool())
+	else if (Scroll && !GamePlayBool())
 	{
 		if (Timer >= 120)
 		{

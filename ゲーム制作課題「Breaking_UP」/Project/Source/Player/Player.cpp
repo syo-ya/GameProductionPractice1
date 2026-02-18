@@ -7,6 +7,7 @@
 #include "../Scene/SceneManager.h"
 #include "../FPS/FPS.h"
 #include "../Sound/Sound.h"
+#include "../Map/Map.h"
 #include "math.h"
 
 PlayerData g_PlayerData = { 0 };
@@ -92,7 +93,7 @@ void StepPlayer()
 	{
 		g_PrevPlayerData = g_PlayerData;
 
-		if (IsInputKey(KEY_Z))
+		if (IsInputKey(KEY_X))
 		{
 			PLAYER_MOVE_MAX = 6.5f;
 			PLAYER_JUMP_MAX = 12.0f;
@@ -154,11 +155,11 @@ void StepPlayer()
 			}
 			MoveNow = false;
 		}
-		if (IsTriggerKey(KEY_SPACE) && !g_PrevPlayerData.jumpPow && !JumpInput)
+		if (IsTriggerKey(KEY_Z) && !g_PrevPlayerData.jumpPow && !JumpInput)
 		{
 			JumpInput = true;
 		}
-		if (IsInputKey(KEY_SPACE) && !g_PlayerData.jumpPow && JumpInput)
+		if (IsInputKey(KEY_Z) && !g_PlayerData.jumpPow && JumpInput)
 		{
 			g_PlayerData.move.y += -PLAYER_JUMP_POWER;
 
@@ -168,14 +169,13 @@ void StepPlayer()
 			}
 			SECooltime = false;
 		}
-
 		g_PlayerData.move.y += PLAYER_GRAVITY;
 	}
 }
 
 void UpdatePlayer()
 {
-	//CameraData camera = GetCamera();
+	CameraData camera = GetCamera();
 	if (camera.pos.y <= g_PlayerData.pos.y - SCREEN_HEIGHT - (SCREEN_HEIGHT / 3))
 	{
 		gameOver = true;
@@ -202,219 +202,219 @@ void UpdatePlayer()
 	g_PlayerData.pos.x += g_PlayerData.move.x;
 	g_PlayerData.pos.y += g_PlayerData.move.y;
 
-	//MapData* Map = GetMaps();
-	//for (int i = 0; i < BLOCK_MAX; i++)
-	//{
-	//	if (Map[i].type == COIN)
-	//	{
-	//		if (Map[i].coinEffect)
-	//		{
-	//			if (pFPS > 0)
-	//			{
-	//				effectTime += 1.00f / pFPS;
-	//			}
-	//			else
-	//			{
-	//				effectTime += 1.00f / 60.00f;
-	//			}
+	MapData* Map = GetMaps();
+	for (int i = 0; i < BLOCK_MAX; i++)
+	{
+		if (Map[i].type == COIN)
+		{
+			if (Map[i].coinEffect)
+			{
+				if (pFPS > 0)
+				{
+					effectTime += 1.00f / pFPS;
+				}
+				else
+				{
+					effectTime += 1.00f / 60.00f;
+				}
 
-	//			if (effectTime >= 0.0f && effectTime < 0.05f)
-	//			{
-	//				Map[i].handle = LoadGraph("Data/Map/Coin/Coin.png");
-	//			}
-	//			else if (effectTime >= 0.05f && effectTime < 0.10f)
-	//			{
-	//				Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin1.png");
-	//			}
-	//			else if (effectTime >= 0.10f && effectTime < 0.15f)
-	//			{
-	//				Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin2.png");
-	//			}
-	//			else if (effectTime >= 0.15f && effectTime < 0.20f)
-	//			{
-	//				Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin3.png");
-	//			}
-	//			else if (effectTime >= 0.20f && effectTime < 0.30f)
-	//			{
-	//				Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin4.png");
-	//			}
-	//			else if (effectTime >= 0.30f)
-	//			{
-	//				Map[i].active = false;
-	//				effectTime = 0.0f;
-	//			}
-	//		}
-	//		if (!Map[i].active)
-	//		{
-	//			Map[i].coinEffect = false;
-	//		}
-	//	}
-	//	if (!Map[i].active) continue;
+				if (effectTime >= 0.0f && effectTime < 0.05f)
+				{
+					Map[i].handle = LoadGraph("Data/Map/Coin/Coin.png");
+				}
+				else if (effectTime >= 0.05f && effectTime < 0.10f)
+				{
+					Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin1.png");
+				}
+				else if (effectTime >= 0.10f && effectTime < 0.15f)
+				{
+					Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin2.png");
+				}
+				else if (effectTime >= 0.15f && effectTime < 0.20f)
+				{
+					Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin3.png");
+				}
+				else if (effectTime >= 0.20f && effectTime < 0.30f)
+				{
+					Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin4.png");
+				}
+				else if (effectTime >= 0.30f)
+				{
+					Map[i].active = false;
+					effectTime = 0.0f;
+				}
+			}
+			if (!Map[i].active)
+			{
+				Map[i].coinEffect = false;
+			}
+		}
+		if (!Map[i].active) continue;
 
-	//	if (Map[i].type == COIN)
-	//	{
-	//		if (Map[i].coinGetClear)
-	//		{
-	//			Map[i].active = false;
-	//		}
-	//	}
+		if (Map[i].type == COIN)
+		{
+			if (Map[i].coinGetClear)
+			{
+				Map[i].active = false;
+			}
+		}
 
-	//	float blockDrawY = Map[i].pos.y - ((MAP_CHIP_Y_NUM * MAP_CHIP_HEIGHT) - SCREEN_HEIGHT);
+		float blockDrawY = Map[i].pos.y - ((MAP_CHIP_Y_NUM * MAP_CHIP_HEIGHT) - SCREEN_HEIGHT);
 
-	//	float playerHitX = g_PlayerData.pos.x + PLAYER_BOX_COLLISION_OFFSET_X;
-	//	float playerHitY = g_PlayerData.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y;
-	//	float playerHitW = PLAYER_BOX_COLLISION_WIDTH;
-	//	float playerHitH = PLAYER_BOX_COLLISION_HEIGHT;
+		float playerHitX = g_PlayerData.pos.x + PLAYER_BOX_COLLISION_OFFSET_X;
+		float playerHitY = g_PlayerData.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y;
+		float playerHitW = PLAYER_BOX_COLLISION_WIDTH;
+		float playerHitH = PLAYER_BOX_COLLISION_HEIGHT;
 
-	//	if (!gameOver && !gameClear)
-	//	{
-	//		if (!CheckSquareSquare(playerHitX, playerHitY, playerHitW, playerHitH,
-	//			Map[i].pos.x, blockDrawY, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
-	//		{
-	//			continue;
-	//		}
+		if (!gameOver && !gameClear)
+		{
+			if (!CheckSquareSquare(playerHitX, playerHitY, playerHitW, playerHitH,
+				Map[i].pos.x, blockDrawY, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
+			{
+				continue;
+			}
 
-	//		float prevHitX = g_PrevPlayerData.pos.x + PLAYER_BOX_COLLISION_OFFSET_X;
-	//		float prevHitY = g_PrevPlayerData.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y;
+			float prevHitX = g_PrevPlayerData.pos.x + PLAYER_BOX_COLLISION_OFFSET_X;
+			float prevHitY = g_PrevPlayerData.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y;
 
-	//		// 下方向
-	//		if (g_PrevPlayerData.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT < blockDrawY)
-	//		{
-	//			if (!Map[i].EnemyKill)
-	//			{
-	//				if (Map[i].type == NORMAL_BLOCK || Map[i].type == ONE_WAY_BLOCK || Map[i].type == ENEMY || Map[i].type == SKY_ENEMY)
-	//				{
-	//					g_PlayerData.pos.y = blockDrawY - (PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT) - PLAYER_MAP_COLLISION_OFFSET;
-	//					g_PlayerData.move.y = 0.0f;
-	//					g_PlayerData.isAir = false;
-	//					g_PlayerData.jumpPow = false;
-	//					SECooltime = true;
-	//					if (JumpInput && Map[i].type != ENEMY && Map[i].type != SKY_ENEMY)
-	//					{
-	//						JumpInput = false;
-	//					}
-	//				}
-	//			}
-	//			if (Map[i].type == COIN && !Map[i].coinGet)
-	//			{
-	//				PlaySE(SE_COIN);
-	//				TotalGetCoin++;
-	//				StageGetCoin++;
-	//				Map[i].coinGet = true;
-	//				Map[i].coinEffect = true;
-	//			}
-	//			if (Map[i].type == ENEMY || Map[i].type == SKY_ENEMY)
-	//			{
-	//				JumpInput = true;
-	//				EnemyKill(i);
-	//			}
-	//			if (Map[i].type == NEEDLE_BLOCK)
-	//			{
-	//				gameOver = true;
-	//			}
-	//			if (Map[i].type == FIRE_ENEMY)
-	//			{
-	//				gameOver = true;
-	//			}
-	//			if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
-	//			{
-	//				gameClear = true;
-	//			}
-	//		}
-	//		// 右方向（左の壁にぶつかる）
-	//		else if (prevHitX + PLAYER_BOX_COLLISION_WIDTH < Map[i].pos.x && Map[i].type != ONE_WAY_BLOCK)
-	//		{
-	//			if (Map[i].type == COIN && !Map[i].coinGet)
-	//			{
-	//				PlaySE(SE_COIN);
-	//				TotalGetCoin++;
-	//				StageGetCoin++;
-	//				Map[i].coinGet = true;
-	//				Map[i].coinEffect = true;
-	//			}
-	//			if (Map[i].type == NORMAL_BLOCK)
-	//			{
-	//				g_PlayerData.pos.x = Map[i].pos.x - (PLAYER_BOX_COLLISION_OFFSET_X + PLAYER_BOX_COLLISION_WIDTH) - PLAYER_MAP_COLLISION_OFFSET;
-	//				g_PlayerData.move.x = 0.0f;
-	//			}
-	//			if (Map[i].type == NEEDLE_BLOCK)
-	//			{
-	//				gameOver = true;
-	//			}
-	//			if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY && !Map[i].EnemyKill)
-	//			{
-	//				gameOver = true;
-	//			}
-	//			if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
-	//			{
-	//				gameClear = true;
-	//			}
-	//		}
-	//		// 【3】左方向（右の壁にぶつかる）
-	//		else if (prevHitX > Map[i].pos.x + MAP_CHIP_WIDTH && Map[i].type != ONE_WAY_BLOCK)
-	//		{
-	//			if (Map[i].type == COIN && !Map[i].coinGet)
-	//			{
-	//				PlaySE(SE_COIN);
-	//				TotalGetCoin++;
-	//				StageGetCoin++;
-	//				Map[i].coinGet = true;
-	//				Map[i].coinEffect = true;
-	//			}
-	//			if (Map[i].type == NORMAL_BLOCK)
-	//			{
-	//				g_PlayerData.pos.x = Map[i].pos.x + MAP_CHIP_WIDTH - PLAYER_BOX_COLLISION_OFFSET_X + PLAYER_MAP_COLLISION_OFFSET;
-	//				g_PlayerData.move.x = 0.0f;
-	//			}
-	//			if (Map[i].type == NEEDLE_BLOCK)
-	//			{
-	//				gameOver = true;
-	//			}
-	//			if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY && !Map[i].EnemyKill)
-	//			{
-	//				gameOver = true;
-	//			}
-	//			if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
-	//			{
-	//				gameClear = true;
-	//			}
-	//		}
-	//		// 【4】上方向（天井）
-	//		else if (prevHitY > blockDrawY + MAP_CHIP_HEIGHT && Map[i].type != ONE_WAY_BLOCK)
-	//		{
-	//			if (Map[i].type == COIN && !Map[i].coinGet)
-	//			{
-	//				PlaySE(SE_COIN);
-	//				TotalGetCoin++;
-	//				StageGetCoin++;
-	//				Map[i].coinGet = true;
-	//				Map[i].coinEffect = true;
-	//			}
-	//			if (Map[i].type != COIN)
-	//			{
-	//				g_PlayerData.pos.y = blockDrawY + MAP_CHIP_HEIGHT - PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_MAP_COLLISION_OFFSET;
-	//				g_PlayerData.move.y = 0.0f;
-	//				g_PlayerData.jumpPow = true;
-	//			}
-	//			if (Map[i].type == NEEDLE_BLOCK)
-	//			{
-	//				gameOver = true;
-	//			}
-	//			if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY && !Map[i].EnemyKill)
-	//			{
-	//				gameOver = true;
-	//			}
-	//			if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
-	//			{
-	//				gameClear = true;
-	//			}
-	//		}
-	//		else if ((Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY) && !Map[i].EnemyKill)
-	//		{
-	//			gameOver = true;
-	//		}
-	//	}
-	//}
+			// 下方向
+			if (g_PrevPlayerData.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT < blockDrawY)
+			{
+				if (!Map[i].EnemyKill)
+				{
+					if (Map[i].type == NORMAL_BLOCK || Map[i].type == ONE_WAY_BLOCK || Map[i].type == ENEMY || Map[i].type == SKY_ENEMY)
+					{
+						g_PlayerData.pos.y = blockDrawY - (PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT) - PLAYER_MAP_COLLISION_OFFSET;
+						g_PlayerData.move.y = 0.0f;
+						g_PlayerData.isAir = false;
+						g_PlayerData.jumpPow = false;
+						SECooltime = true;
+						if (JumpInput && Map[i].type != ENEMY && Map[i].type != SKY_ENEMY)
+						{
+							JumpInput = false;
+						}
+					}
+				}
+				if (Map[i].type == COIN && !Map[i].coinGet)
+				{
+					//PlaySE(SE_COIN);
+					TotalGetCoin++;
+					StageGetCoin++;
+					Map[i].coinGet = true;
+					Map[i].coinEffect = true;
+				}
+				if (Map[i].type == ENEMY || Map[i].type == SKY_ENEMY)
+				{
+					JumpInput = true;
+					//EnemyKill(i);
+				}
+				if (Map[i].type == NEEDLE_BLOCK)
+				{
+					gameOver = true;
+				}
+				if (Map[i].type == FIRE_ENEMY)
+				{
+					gameOver = true;
+				}
+				if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
+				{
+					gameClear = true;
+				}
+			}
+			// 右方向（左の壁にぶつかる）
+			else if (prevHitX + PLAYER_BOX_COLLISION_WIDTH < Map[i].pos.x && Map[i].type != ONE_WAY_BLOCK)
+			{
+				if (Map[i].type == COIN && !Map[i].coinGet)
+				{
+					//PlaySE(SE_COIN);
+					TotalGetCoin++;
+					StageGetCoin++;
+					Map[i].coinGet = true;
+					Map[i].coinEffect = true;
+				}
+				if (Map[i].type == NORMAL_BLOCK)
+				{
+					g_PlayerData.pos.x = Map[i].pos.x - (PLAYER_BOX_COLLISION_OFFSET_X + PLAYER_BOX_COLLISION_WIDTH) - PLAYER_MAP_COLLISION_OFFSET;
+					g_PlayerData.move.x = 0.0f;
+				}
+				if (Map[i].type == NEEDLE_BLOCK)
+				{
+					gameOver = true;
+				}
+				if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY && !Map[i].EnemyKill)
+				{
+					gameOver = true;
+				}
+				if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
+				{
+					gameClear = true;
+				}
+			}
+			// 【3】左方向（右の壁にぶつかる）
+			else if (prevHitX > Map[i].pos.x + MAP_CHIP_WIDTH && Map[i].type != ONE_WAY_BLOCK)
+			{
+				if (Map[i].type == COIN && !Map[i].coinGet)
+				{
+					//PlaySE(SE_COIN);
+					TotalGetCoin++;
+					StageGetCoin++;
+					Map[i].coinGet = true;
+					Map[i].coinEffect = true;
+				}
+				if (Map[i].type == NORMAL_BLOCK)
+				{
+					g_PlayerData.pos.x = Map[i].pos.x + MAP_CHIP_WIDTH - PLAYER_BOX_COLLISION_OFFSET_X + PLAYER_MAP_COLLISION_OFFSET;
+					g_PlayerData.move.x = 0.0f;
+				}
+				if (Map[i].type == NEEDLE_BLOCK)
+				{
+					gameOver = true;
+				}
+				if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY && !Map[i].EnemyKill)
+				{
+					gameOver = true;
+				}
+				if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
+				{
+					gameClear = true;
+				}
+			}
+			// 【4】上方向（天井）
+			else if (prevHitY > blockDrawY + MAP_CHIP_HEIGHT && Map[i].type != ONE_WAY_BLOCK && Map[i].type != DESTROY_BLOCK)
+			{
+				if (Map[i].type == COIN && !Map[i].coinGet)
+				{
+					//PlaySE(SE_COIN);
+					TotalGetCoin++;
+					StageGetCoin++;
+					Map[i].coinGet = true;
+					Map[i].coinEffect = true;
+				}
+				if (Map[i].type != COIN)
+				{
+					g_PlayerData.pos.y = blockDrawY + MAP_CHIP_HEIGHT - PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_MAP_COLLISION_OFFSET;
+					g_PlayerData.move.y = 0.0f;
+					g_PlayerData.jumpPow = true;
+				}
+				if (Map[i].type == NEEDLE_BLOCK)
+				{
+					gameOver = true;
+				}
+				if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY && !Map[i].EnemyKill)
+				{
+					gameOver = true;
+				}
+				if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
+				{
+					gameClear = true;
+				}
+			}
+			else if ((Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY) && !Map[i].EnemyKill)
+			{
+				gameOver = true;
+			}
+		}
+	}
 	UpdatePlayerAnimation();
 }
 
@@ -488,22 +488,6 @@ void UpdatePlayerAnimation()
 	UpdateAnimation(animData);
 }
 
-void GameClearCoin()
-{
-	StageGetCoin = 0;
-}
-
-void GameOverCoin()
-{
-	TotalGetCoin -= StageGetCoin;
-	StageGetCoin = 0;
-}
-
-int CoinNum()
-{
-	return TotalGetCoin;
-}
-
 bool GameOverbool()
 {
 	return gameOver;
@@ -513,7 +497,7 @@ void GameClearPlayer()
 {
 	if (!gameSceneChangeSE)
 	{
-		PlaySE(SE_CLEAR);
+		//PlaySE(SE_CLEAR);
 		g_PlayerData.move.x = 0.0f;
 		g_PlayerData.move.y = 0.0f;
 		gameSceneChangeSE = true;
@@ -529,7 +513,7 @@ void GameOverPlayer()
 {
 	if (!gameSceneChangeSE)
 	{
-		PlaySE(SE_GAME_OVER);
+		//PlaySE(SE_GAME_OVER);
 		g_PlayerData.move.x = 0.0f;
 		g_PlayerData.move.y = -0.00001f;
 		gameSceneChangeSE = true;

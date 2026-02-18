@@ -6,11 +6,11 @@
 
 MapChipData g_MapChip[MAP_CHIP_Y_NUM][MAP_CHIP_X_NUM] = { 0 };
 
-void LoadMapChipData(int stage)
+void LoadMapChipData()
 {
 	FILE* fp;
 	char mapPath[64];
-	sprintf_s(mapPath, sizeof(mapPath), "Data/Map/StageData/stage%d.bin", stage);
+	sprintf_s(mapPath, sizeof(mapPath), "Data/Map/Stage.bin");
 	if (fopen_s(&fp, mapPath, "rb") != 0) return;
 
 	for (int i = 0; i < MAP_CHIP_Y_NUM; i++)

@@ -11,9 +11,9 @@ void InitMap()
 	InitMapData();
 }
 
-void LoadMap(int stage)
+void LoadMap()
 {
-	LoadMapChipData(stage);
+	LoadMapChipData();
 	LoadMapData();
 }
 
