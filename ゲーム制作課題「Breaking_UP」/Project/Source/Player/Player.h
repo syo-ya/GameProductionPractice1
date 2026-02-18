@@ -6,14 +6,12 @@
 #define PLAYER_DEFAULT_POS_X (150.0f)
 #define PLAYER_DEFAULT_POS_Y (785.0f)
 #define PLAYER_MOVE_POWER (0.5f)
-#define PLAYER_MOVE_MAX (6.5)
 
 #define PLAYER_WIDTH	(72.0f)
 #define PLAYER_HEIGHT	(72.0f)
 #define PLAYER_RADIUS	(36.0f)
 
 #define PLAYER_JUMP_POWER (2.0f)
-#define PLAYER_JUMP_MAX (12.0f)
 #define PLAYER_GRAVITY (0.45f)
 #define PLAYER_GRAVITY_MAX (30.0f)
 
