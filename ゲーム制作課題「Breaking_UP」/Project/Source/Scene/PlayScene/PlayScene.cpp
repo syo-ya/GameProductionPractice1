@@ -1,7 +1,7 @@
 #include "DxLib.h"
 #include "../../Player/Player.h"
 #include "../../Scene/SceneManager.h"
-//#include "../../Bullet/BulletManager.h"
+#include "../../Bullet/Bullet.h"
 //#include "../../Enemy/EnemyManager.h"
 #include "../../Collision/Collision.h"
 #include "../../Map/MapManager.h"
@@ -16,23 +16,17 @@ void InitPlayScene()
 	InitMap();
 	InitPlayer();
 	InitCamera();
+	InitBullet();
 	// エネミー初期化
 	//InitEnemy();
-
-	// 弾を初期化
-	//InitBullet();
 }
 
 void LoadPlayScene()
 {
 	LoadMap();
 	LoadPlayer();
-
 	// エネミーロード
 	//LoadEnemy();
-
-	// 弾ロード
-	//LoadBullet();
 }
 
 void StartPlayScene()
@@ -48,13 +42,9 @@ void StepPlayScene()
 	StepMap();
 	StepPlayer();
 	StepCamera();
-	// まず敵出現システム
-	//StepEnemySpawnSystem();
-
+	
 	// 敵更新
 	//StepEnemy();
-
-	//StepBullet();
 }
 
 
@@ -62,12 +52,10 @@ void UpdatePlayScene()
 {
 	UpdateMap();
 	UpdatePlayer();
+	UpdateBullet();
 
 	// エネミー更新
 	//UpdateEnemy();
-
-	// 弾更新
-	//UpdateBullet();
 
 	CheckCollision();
 }
@@ -77,9 +65,7 @@ void DrawPlayScene()
 	DrawGraph(0, 0, PlayBG, TRUE);
 	DrawCamera();
 	DrawMap();
-
-	// 弾描画
-	//DrawBullet();
+	DrawBullet();
 
 	// エネミー描画
 	//DrawEnemy();
@@ -91,10 +77,8 @@ void FinPlayScene()
 {
 	FinMap();
 	FinPlayer();
+	FinBullet();
 
 	// エネミー終了
 	//FinEnemy();
-
-	// 弾終了
-	//FinBullet();
 }

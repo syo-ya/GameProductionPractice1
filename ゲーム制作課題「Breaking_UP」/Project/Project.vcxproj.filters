@@ -49,6 +49,9 @@
     <Filter Include="Source\Scene\TitleScene">
       <UniqueIdentifier>{544f5295-dcad-4f36-9979-1c095e005176}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source\Bullet">
+      <UniqueIdentifier>{b139ae36-155c-42db-abe6-62e6512a5597}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source\Main.cpp">
@@ -101,6 +104,9 @@
     </ClCompile>
     <ClCompile Include="Source\Map\MapManager.cpp">
       <Filter>Source\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\Bullet\Bullet.cpp">
+      <Filter>Source\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +163,9 @@
     </ClInclude>
     <ClInclude Include="Source\Map\MapParameter.h">
       <Filter>Source\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\Bullet\Bullet.h">
+      <Filter>Source\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

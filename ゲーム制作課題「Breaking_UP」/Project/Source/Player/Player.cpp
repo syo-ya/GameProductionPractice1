@@ -8,6 +8,7 @@
 #include "../FPS/FPS.h"
 #include "../Sound/Sound.h"
 #include "../Map/Map.h"
+#include "../Bullet/Bullet.h"
 #include "math.h"
 
 PlayerData g_PlayerData = { 0 };
@@ -33,6 +34,12 @@ bool MoveNow = false;
 
 float PLAYER_MOVE_MAX = 6.5;
 float PLAYER_JUMP_MAX = 12.0;
+
+int Coinhandle = LoadGraph("Data/Map/Coin/Coin.png");
+int GetCoinhandle1 = LoadGraph("Data/Map/Coin/GetCoin1.png");
+int GetCoinhandle2 = LoadGraph("Data/Map/Coin/GetCoin2.png");
+int GetCoinhandle3 = LoadGraph("Data/Map/Coin/GetCoin3.png");
+int GetCoinhandle4 = LoadGraph("Data/Map/Coin/GetCoin4.png");
 
 struct PlayerAnimationParam
 {
@@ -155,6 +162,12 @@ void StepPlayer()
 			}
 			MoveNow = false;
 		}
+
+		if (IsTriggerKey(KEY_SPACE))
+		{
+			FireBullet(g_PlayerData.pos.x, g_PlayerData.pos.y);
+		}
+
 		if (IsTriggerKey(KEY_Z) && !g_PrevPlayerData.jumpPow && !JumpInput)
 		{
 			JumpInput = true;
@@ -220,23 +233,23 @@ void UpdatePlayer()
 
 				if (effectTime >= 0.0f && effectTime < 0.05f)
 				{
-					Map[i].handle = LoadGraph("Data/Map/Coin/Coin.png");
+					Map[i].handle =Coinhandle;
 				}
 				else if (effectTime >= 0.05f && effectTime < 0.10f)
 				{
-					Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin1.png");
+					Map[i].handle =GetCoinhandle1;
 				}
 				else if (effectTime >= 0.10f && effectTime < 0.15f)
 				{
-					Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin2.png");
+					Map[i].handle = GetCoinhandle2;
 				}
 				else if (effectTime >= 0.15f && effectTime < 0.20f)
 				{
-					Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin3.png");
+					Map[i].handle = GetCoinhandle3;
 				}
 				else if (effectTime >= 0.20f && effectTime < 0.30f)
 				{
-					Map[i].handle = LoadGraph("Data/Map/Coin/GetCoin4.png");
+					Map[i].handle = GetCoinhandle4;
 				}
 				else if (effectTime >= 0.30f)
 				{
