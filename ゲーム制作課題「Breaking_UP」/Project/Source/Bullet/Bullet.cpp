@@ -39,6 +39,9 @@ void InitBullet()
 		g_BulletData[i].move.y = BULLET_MOVE_SPEED;
 		g_BulletData[i].LifeTime = 0.0f;
 	}
+	
+	BulletPos.x = PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH / 2) - BULLET_RADIUS + TurnBulletPos;
+	BulletPos.y = NULL;
 }
 
 void UpdateBullet()
@@ -95,10 +98,18 @@ void UpdateBullet()
 		{
 			g_BulletData[i].pos.x += g_BulletData[i].move.x;
 			g_BulletData[i].pos.y += g_BulletData[i].move.y;
-			g_BulletData[i].LifeTime += 1 / rFPS();
+			if (rFPS() > 0)
+			{
+				g_BulletData[i].LifeTime += 1.00f / rFPS();
+			}
+			else
+			{
+				g_BulletData[i].LifeTime += 1.00f / 60.00f;
+			}
 			if (g_BulletData[i].LifeTime >= 3.0f)
 			{
 				g_BulletData[i].active = false;
+				g_BulletData[i].Fire = false;
 			}
 		}
 		else if (g_BulletData[i].LifeTime > 0.0f)

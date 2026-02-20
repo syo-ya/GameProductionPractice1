@@ -17,8 +17,6 @@ PlayerData g_PrevPlayerData = { 0 };
 int TotalGetCoin = 0;
 int StageGetCoin = 0;
 
-float pFPS = rFPS();
-
 float effectTime = 0.0f;
 
 bool SECooltime = true;
@@ -229,9 +227,9 @@ void UpdatePlayer()
 		{
 			if (Map[i].coinEffect)
 			{
-				if (pFPS > 0)
+				if (rFPS() > 0)
 				{
-					effectTime += 1.00f / pFPS;
+					effectTime += 1.00f / rFPS();
 				}
 				else
 				{
@@ -436,7 +434,7 @@ void DrawPlayer()
 
 	DrawGraph((int)g_PlayerData.pos.x - camera.pos.x, (int)g_PlayerData.pos.y - camera.pos.y, g_PlayerData.handle, TRUE);
 	DrawFormatString(0, 0, GetColor(0, 0, 0), "älìæÉRÉCÉìÅF%d / 5", TotalGetCoin);
-	DrawFormatString(800, 400, GetColor(0, 0, 0), "%f", effectTime);
+	DrawFormatString(800, 400, GetColor(0, 0, 0), "");
 }
 
 void FinPlayer()
