@@ -5,6 +5,8 @@
 #include "../Camera/Camera.h"
 #include "../Player/Player.h"
 #include "../FPS/FPS.h"
+#include "../Map/Map.h"
+#include "../GameSetting/GameSetting.h"
 
 #ifndef M_PI
 #define M_PI 3.14159265358979323846
@@ -26,6 +28,21 @@ int ry;
 
 float TurnBulletPos;
 
+int MapNum = NULL;
+
+int BlockHandle0 = -1;
+int BlockHandle1 = -1;
+int BlockHandle2 = -1;
+int BlockHandle3 = -1;
+int BlockHandle4 = -1;
+int BlockHandle5 = -1;
+int BlockHandle6 = -1;
+int BlockHandle7 = -1;
+int BlockHandle8 = -1;
+int BlockHandle9 = -1;
+int BlockHandle10 = -1;
+int BlockHandle11 = -1;
+
 void InitBullet()
 {
 	g_ArrowData.handle = LoadGraph("Data/Bullet/Arrow.png");
@@ -39,9 +56,22 @@ void InitBullet()
 		g_BulletData[i].move.y = BULLET_MOVE_SPEED;
 		g_BulletData[i].LifeTime = 0.0f;
 	}
-	
+
 	BulletPos.x = PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH / 2) - BULLET_RADIUS + TurnBulletPos;
 	BulletPos.y = NULL;
+
+	BlockHandle0 = LoadGraph("Data/Map/Destroy_Block/Block.png");
+	BlockHandle1 = LoadGraph("Data/Map/Destroy_Block/Block_Break_1.png");
+	BlockHandle2 = LoadGraph("Data/Map/Destroy_Block/Block_Break_2.png");
+	BlockHandle3 = LoadGraph("Data/Map/Destroy_Block/Block_Break_3.png");
+	BlockHandle4 = LoadGraph("Data/Map/Destroy_Block/Block_Break_4.png");
+	BlockHandle5 = LoadGraph("Data/Map/Destroy_Block/Block_Break_5.png");
+	BlockHandle6 = LoadGraph("Data/Map/Destroy_Block/Block_Break_6.png");
+	BlockHandle7 = LoadGraph("Data/Map/Destroy_Block/Block_Break_7.png");
+	BlockHandle8 = LoadGraph("Data/Map/Destroy_Block/Block_Break_8.png");
+	BlockHandle9 = LoadGraph("Data/Map/Destroy_Block/Block_Break_9.png");
+	BlockHandle10 = LoadGraph("Data/Map/Destroy_Block/Block_Break_10.png");
+	BlockHandle11 = -1;
 }
 
 void UpdateBullet()
@@ -50,6 +80,8 @@ void UpdateBullet()
 
 	for (int i = 0; i < BULLET_NUM; i++)
 	{
+		g_BulletData[i].prevPos = g_BulletData[i].pos;
+
 		if (!g_BulletData[i].Fire)
 		{
 			if (BulletDir == 1)
@@ -109,14 +141,136 @@ void UpdateBullet()
 			if (g_BulletData[i].LifeTime >= 3.0f)
 			{
 				g_BulletData[i].active = false;
-				g_BulletData[i].Fire = false;
 			}
 		}
-		else if (g_BulletData[i].LifeTime > 0.0f)
+
+		else if (g_BulletData[i].LifeTime > 0.0f || g_BulletData[i].Fire)
 		{
 			g_BulletData[i].LifeTime = 0.0f;
+			g_BulletData[i].Fire = false;
+		}
+
+		MapData* Map = GetMaps();
+		for (int j = 0; j < BLOCK_MAX; j++)
+		{
+			if (!Map[j].active)
+			{
+				continue;
+			}
+			float blockDrawY = Map[j].pos.y - ((MAP_CHIP_Y_NUM * MAP_CHIP_HEIGHT) - SCREEN_HEIGHT);
+
+			if (!GamePlayBool() && g_BulletData[i].active)
+			{
+				if (!CheckSquareSquare(g_BulletData[i].pos.x + BULLET_OFFSET, g_BulletData[i].pos.y + BULLET_OFFSET, BULLET_WIDTH - BULLET_OFFSET * 2, BULLET_HEIGHT - BULLET_OFFSET * 2,
+					Map[j].pos.x, blockDrawY, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
+				{
+					continue;
+				}
+
+				if (Map[j].type == NORMAL_BLOCK || Map[j].type == NEEDLE_BLOCK)
+				{
+					g_BulletData[i].active = false;
+				}
+				if (Map[j].type == DESTROY_BLOCK)
+				{
+					if (Map[j].BreakFlg == -1)
+					{
+						Map[j].BreakFlg = 0;
+						Map[j].BreakTime = 0.0f;
+						MapNum = j;
+						g_BulletData[i].active = false;
+					}
+					else if (Map[j].BreakFlg == 1 || Map[j].BreakFlg == 0)
+					{
+						Map[j].BreakFlg = 2;
+						Map[j].BreakTime = 0.0f;
+						MapNum = j;
+						g_BulletData[i].active = false;
+					}
+				}
+			}
 		}
 	}
+
+	MapData* Map = GetMaps();
+	if (Map[MapNum].type == DESTROY_BLOCK)
+	{
+		if (Map[MapNum].BreakFlg == 0)
+		{
+			if (rFPS() > 0)
+			{
+				Map[MapNum].BreakTime += 1.00f / rFPS();
+			}
+			else
+			{
+				Map[MapNum].BreakTime += 1.00f / 60.00f;
+			}
+
+			if (Map[MapNum].BreakTime >= 0.0f && Map[MapNum].BreakTime < 0.05f)
+			{
+				Map[MapNum].handle = BlockHandle1;
+			}
+			else if (Map[MapNum].BreakTime >= 0.05f && Map[MapNum].BreakTime < 0.10f)
+			{
+				Map[MapNum].handle = BlockHandle2;
+			}
+			else if (Map[MapNum].BreakTime >= 0.10f && Map[MapNum].BreakTime < 0.15f)
+			{
+				Map[MapNum].handle = BlockHandle3;
+			}
+			else if (Map[MapNum].BreakTime >= 0.15f && Map[MapNum].BreakTime < 0.20f)
+			{
+				Map[MapNum].handle = BlockHandle4;
+			}
+			else if (Map[MapNum].BreakTime >= 0.20f && Map[MapNum].BreakTime < 0.25f)
+			{
+				Map[MapNum].handle = BlockHandle5;
+				Map[MapNum].BreakTime = 0.0f;
+				Map[MapNum].BreakFlg = 1;
+			}
+		}
+
+		if (Map[MapNum].BreakFlg == 2)
+		{
+			if (rFPS() > 0)
+			{
+				Map[MapNum].BreakTime += 1.00f / rFPS();
+			}
+			else
+			{
+				Map[MapNum].BreakTime += 1.00f / 60.00f;
+			}
+
+			if (Map[MapNum].BreakTime >= 0.0f && Map[MapNum].BreakTime < 0.03f)
+			{
+				Map[MapNum].handle = BlockHandle6;
+			}
+			else if (Map[MapNum].BreakTime >= 0.03f && Map[MapNum].BreakTime < 0.06f)
+			{
+				Map[MapNum].handle = BlockHandle7;
+			}
+			else if (Map[MapNum].BreakTime >= 0.06f && Map[MapNum].BreakTime < 0.09f)
+			{
+				Map[MapNum].handle = BlockHandle8;
+			}
+			else if (Map[MapNum].BreakTime >= 0.09f && Map[MapNum].BreakTime < 0.12f)
+			{
+				Map[MapNum].handle = BlockHandle9;
+			}
+			else if (Map[MapNum].BreakTime >= 0.12f && Map[MapNum].BreakTime < 0.15f)
+			{
+				Map[MapNum].handle = BlockHandle10;
+			}
+			else if (Map[MapNum].BreakTime > 0.15f)
+			{
+				Map[MapNum].handle = BlockHandle11;
+				Map[MapNum].BreakTime = 0.0f;
+				Map[MapNum].BreakFlg = -1;
+				Map[MapNum].active = false;
+			}
+		}
+	}
+
 }
 
 void DrawBullet()
@@ -145,11 +299,13 @@ void DrawBullet()
 	GetJoypadAnalogInputRight(&rx, &ry, DX_INPUT_PAD1);
 
 	SetDrawMode(DX_DRAWMODE_BILINEAR);
+
 	if ((IsInputKey(KEY_W) && IsInputKey(KEY_D)) || (rx > 200 && ry < -200))
 	{
 		BulletDir = 2;
 		BulletPos.x = PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH / 2) + ARROW_SIZE - BULLET_WIDTH + TurnBulletPos;
 		BulletPos.y = ARROW_RADIUS;
+
 		DrawRotaGraph(player.pos.x + PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH / 2) + ARROW_SIZE + TurnBulletPos - camera.pos.x,
 			player.pos.y + ARROW_RADIUS - camera.pos.y,
 			1.0, 1.25 * M_PI, g_ArrowData.handle, TRUE);
@@ -161,7 +317,7 @@ void DrawBullet()
 		BulletPos.x = PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH / 2) + ARROW_SIZE - BULLET_WIDTH + TurnBulletPos;
 		BulletPos.y = PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT + ARROW_RADIUS - BULLET_HEIGHT;
 		DrawRotaGraph(player.pos.x + PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH / 2) + ARROW_SIZE + TurnBulletPos - camera.pos.x,
-			player.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT + ARROW_RADIUS  - camera.pos.y,
+			player.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT + ARROW_RADIUS - camera.pos.y,
 			1.0, 1.75 * M_PI, g_ArrowData.handle, TRUE);
 
 	}
@@ -200,7 +356,7 @@ void DrawBullet()
 		BulletDir = 3;
 		BulletPos.x = PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH)+ARROW_SIZE - (BULLET_WIDTH * 1.5f) + TurnBulletPos;
 		BulletPos.y = PLAYER_BOX_COLLISION_OFFSET_Y + (PLAYER_BOX_COLLISION_HEIGHT / 2) - BULLET_RADIUS;
-		DrawRotaGraph(player.pos.x + PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH) + ARROW_SIZE + TurnBulletPos - camera.pos.x,
+		DrawRotaGraph(player.pos.x + PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH)+ARROW_SIZE + TurnBulletPos - camera.pos.x,
 			player.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y + (PLAYER_BOX_COLLISION_HEIGHT / 2) - camera.pos.y,
 			1.0, 1.5 + M_PI, g_ArrowData.handle, TRUE);
 
@@ -211,7 +367,7 @@ void DrawBullet()
 		BulletPos.x = PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH / 2) - BULLET_RADIUS + TurnBulletPos;
 		BulletPos.y = PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT + (ARROW_RADIUS * 2) - BULLET_HEIGHT;
 		DrawRotaGraph(player.pos.x + PLAYER_BOX_COLLISION_OFFSET_X + (PLAYER_BOX_COLLISION_WIDTH / 2) + TurnBulletPos - camera.pos.x,
-			player.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT + (ARROW_RADIUS * 2) - camera.pos.y, 
+			player.pos.y + PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT + (ARROW_RADIUS * 2) - camera.pos.y,
 			1.0, 0, g_ArrowData.handle, TRUE);
 	}
 	else if (IsInputKey(KEY_A) || rx <= -1000)

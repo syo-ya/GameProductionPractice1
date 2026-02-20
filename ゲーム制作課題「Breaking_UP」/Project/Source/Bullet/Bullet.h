@@ -1,6 +1,6 @@
 #pragma once
 
-#define BULLET_MOVE_SPEED (20.0f)
+#define BULLET_MOVE_SPEED (15.0f)
 
 #define BULLET_NUM (50)
 
@@ -10,6 +10,8 @@
 #define BULLET_HEIGHT	(16)
 #define BULLET_RADIUS	(8)
 
+#define BULLET_OFFSET	(8)
+
 #define ARROW_RADIUS	(12.5f)
 #define ARROW_SIZE	(25.0f)
 
@@ -17,6 +19,7 @@ struct BulletData
 {
 	int handle;
 	VECTOR pos;
+	VECTOR prevPos;
 	VECTOR move;
 	bool active;
 	bool Hit;

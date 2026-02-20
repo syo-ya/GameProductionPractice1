@@ -76,6 +76,8 @@ MapData* CreateMap(MapChipType type, VECTOR pos)
 			Map->handle = g_MapHandle[type];
 			Map->pos = pos;
 			Map->type = type;
+			Map->BreakFlg = -1;
+			Map->BreakTime = 0.0f;
 			return Map;
 		}
 	}
