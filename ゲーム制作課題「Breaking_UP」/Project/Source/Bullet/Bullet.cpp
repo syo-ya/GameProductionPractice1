@@ -28,8 +28,6 @@ int ry;
 
 float TurnBulletPos;
 
-int MapNum = NULL;
-
 int BlockHandle0 = -1;
 int BlockHandle1 = -1;
 int BlockHandle2 = -1;
@@ -177,14 +175,12 @@ void UpdateBullet()
 					{
 						Map[j].BreakFlg = 0;
 						Map[j].BreakTime = 0.0f;
-						MapNum = j;
 						g_BulletData[i].active = false;
 					}
 					else if (Map[j].BreakFlg == 1 || Map[j].BreakFlg == 0)
 					{
 						Map[j].BreakFlg = 2;
 						Map[j].BreakTime = 0.0f;
-						MapNum = j;
 						g_BulletData[i].active = false;
 					}
 				}
@@ -193,84 +189,86 @@ void UpdateBullet()
 	}
 
 	MapData* Map = GetMaps();
-	if (Map[MapNum].type == DESTROY_BLOCK)
+	for (int j = 0; j < BLOCK_MAX; j++)
 	{
-		if (Map[MapNum].BreakFlg == 0)
+		if (Map[j].type == DESTROY_BLOCK)
 		{
-			if (rFPS() > 0)
+			if (Map[j].BreakFlg == 0)
 			{
-				Map[MapNum].BreakTime += 1.00f / rFPS();
-			}
-			else
-			{
-				Map[MapNum].BreakTime += 1.00f / 60.00f;
+				if (rFPS() > 0)
+				{
+					Map[j].BreakTime += 1.00f / rFPS();
+				}
+				else
+				{
+					Map[j].BreakTime += 1.00f / 60.00f;
+				}
+
+				if (Map[j].BreakTime >= 0.0f && Map[j].BreakTime < 0.05f)
+				{
+					Map[j].handle = BlockHandle1;
+				}
+				else if (Map[j].BreakTime >= 0.05f && Map[j].BreakTime < 0.10f)
+				{
+					Map[j].handle = BlockHandle2;
+				}
+				else if (Map[j].BreakTime >= 0.10f && Map[j].BreakTime < 0.15f)
+				{
+					Map[j].handle = BlockHandle3;
+				}
+				else if (Map[j].BreakTime >= 0.15f && Map[j].BreakTime < 0.20f)
+				{
+					Map[j].handle = BlockHandle4;
+				}
+				else if (Map[j].BreakTime >= 0.20f && Map[j].BreakTime < 0.25f)
+				{
+					Map[j].handle = BlockHandle5;
+					Map[j].BreakTime = 0.0f;
+					Map[j].BreakFlg = 1;
+				}
 			}
 
-			if (Map[MapNum].BreakTime >= 0.0f && Map[MapNum].BreakTime < 0.05f)
+			if (Map[j].BreakFlg == 2)
 			{
-				Map[MapNum].handle = BlockHandle1;
-			}
-			else if (Map[MapNum].BreakTime >= 0.05f && Map[MapNum].BreakTime < 0.10f)
-			{
-				Map[MapNum].handle = BlockHandle2;
-			}
-			else if (Map[MapNum].BreakTime >= 0.10f && Map[MapNum].BreakTime < 0.15f)
-			{
-				Map[MapNum].handle = BlockHandle3;
-			}
-			else if (Map[MapNum].BreakTime >= 0.15f && Map[MapNum].BreakTime < 0.20f)
-			{
-				Map[MapNum].handle = BlockHandle4;
-			}
-			else if (Map[MapNum].BreakTime >= 0.20f && Map[MapNum].BreakTime < 0.25f)
-			{
-				Map[MapNum].handle = BlockHandle5;
-				Map[MapNum].BreakTime = 0.0f;
-				Map[MapNum].BreakFlg = 1;
-			}
-		}
+				if (rFPS() > 0)
+				{
+					Map[j].BreakTime += 1.00f / rFPS();
+				}
+				else
+				{
+					Map[j].BreakTime += 1.00f / 60.00f;
+				}
 
-		if (Map[MapNum].BreakFlg == 2)
-		{
-			if (rFPS() > 0)
-			{
-				Map[MapNum].BreakTime += 1.00f / rFPS();
-			}
-			else
-			{
-				Map[MapNum].BreakTime += 1.00f / 60.00f;
-			}
-
-			if (Map[MapNum].BreakTime >= 0.0f && Map[MapNum].BreakTime < 0.03f)
-			{
-				Map[MapNum].handle = BlockHandle6;
-			}
-			else if (Map[MapNum].BreakTime >= 0.03f && Map[MapNum].BreakTime < 0.06f)
-			{
-				Map[MapNum].handle = BlockHandle7;
-			}
-			else if (Map[MapNum].BreakTime >= 0.06f && Map[MapNum].BreakTime < 0.09f)
-			{
-				Map[MapNum].handle = BlockHandle8;
-			}
-			else if (Map[MapNum].BreakTime >= 0.09f && Map[MapNum].BreakTime < 0.12f)
-			{
-				Map[MapNum].handle = BlockHandle9;
-			}
-			else if (Map[MapNum].BreakTime >= 0.12f && Map[MapNum].BreakTime < 0.15f)
-			{
-				Map[MapNum].handle = BlockHandle10;
-			}
-			else if (Map[MapNum].BreakTime > 0.15f)
-			{
-				Map[MapNum].handle = BlockHandle11;
-				Map[MapNum].BreakTime = 0.0f;
-				Map[MapNum].BreakFlg = -1;
-				Map[MapNum].active = false;
+				if (Map[j].BreakTime >= 0.0f && Map[j].BreakTime < 0.03f)
+				{
+					Map[j].handle = BlockHandle6;
+				}
+				else if (Map[j].BreakTime >= 0.03f && Map[j].BreakTime < 0.06f)
+				{
+					Map[j].handle = BlockHandle7;
+				}
+				else if (Map[j].BreakTime >= 0.06f && Map[j].BreakTime < 0.09f)
+				{
+					Map[j].handle = BlockHandle8;
+				}
+				else if (Map[j].BreakTime >= 0.09f && Map[j].BreakTime < 0.12f)
+				{
+					Map[j].handle = BlockHandle9;
+				}
+				else if (Map[j].BreakTime >= 0.12f && Map[j].BreakTime < 0.15f)
+				{
+					Map[j].handle = BlockHandle10;
+				}
+				else if (Map[j].BreakTime > 0.15f)
+				{
+					Map[j].handle = BlockHandle11;
+					Map[j].BreakTime = 0.0f;
+					Map[j].BreakFlg = -1;
+					Map[j].active = false;
+				}
 			}
 		}
 	}
-
 }
 
 void DrawBullet()
