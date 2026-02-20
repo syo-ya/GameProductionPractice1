@@ -31,6 +31,8 @@ void UpdateFPS()
     }
     g_Count++;
 
+
+
 }
 
 void DrawFPS()

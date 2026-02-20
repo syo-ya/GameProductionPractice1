@@ -35,11 +35,11 @@ bool MoveNow = false;
 float PLAYER_MOVE_MAX = 6.5;
 float PLAYER_JUMP_MAX = 12.0;
 
-int Coinhandle = LoadGraph("Data/Map/Coin/Coin.png");
-int GetCoinhandle1 = LoadGraph("Data/Map/Coin/GetCoin1.png");
-int GetCoinhandle2 = LoadGraph("Data/Map/Coin/GetCoin2.png");
-int GetCoinhandle3 = LoadGraph("Data/Map/Coin/GetCoin3.png");
-int GetCoinhandle4 = LoadGraph("Data/Map/Coin/GetCoin4.png");
+int Coinhandle = NULL;
+int GetCoinhandle1 = NULL;
+int GetCoinhandle2 = NULL;
+int GetCoinhandle3 = NULL;
+int GetCoinhandle4 = NULL;
 
 struct PlayerAnimationParam
 {
@@ -87,6 +87,13 @@ void LoadPlayer()
 	g_PlayerData.animation[PLAYER_ANIM_JUMP].handle = LoadGraph("Data/Player/PlayerJump.png");
 	g_PlayerData.animation[PLAYER_ANIM_FALL].handle = LoadGraph("Data/Player/PlayerFall.png");
 	g_PlayerData.animation[PLAYER_ANIM_LANDING].handle = LoadGraph("Data/Player/PlayerLanding.png");
+
+	Coinhandle = LoadGraph("Data/Map/Coin/Coin.png");
+	GetCoinhandle1 = LoadGraph("Data/Map/Coin/GetCoin1.png");
+	GetCoinhandle2 = LoadGraph("Data/Map/Coin/GetCoin2.png");
+	GetCoinhandle3 = LoadGraph("Data/Map/Coin/GetCoin3.png");
+	GetCoinhandle4 = LoadGraph("Data/Map/Coin/GetCoin4.png");
+
 }
 
 void StartPlayer()
@@ -233,11 +240,11 @@ void UpdatePlayer()
 
 				if (effectTime >= 0.0f && effectTime < 0.05f)
 				{
-					Map[i].handle =Coinhandle;
+					Map[i].handle = Coinhandle;
 				}
 				else if (effectTime >= 0.05f && effectTime < 0.10f)
 				{
-					Map[i].handle =GetCoinhandle1;
+					Map[i].handle = GetCoinhandle1;
 				}
 				else if (effectTime >= 0.10f && effectTime < 0.15f)
 				{
@@ -263,14 +270,6 @@ void UpdatePlayer()
 			}
 		}
 		if (!Map[i].active) continue;
-
-		if (Map[i].type == COIN)
-		{
-			if (Map[i].coinGetClear)
-			{
-				Map[i].active = false;
-			}
-		}
 
 		float blockDrawY = Map[i].pos.y - ((MAP_CHIP_Y_NUM * MAP_CHIP_HEIGHT) - SCREEN_HEIGHT);
 
@@ -308,12 +307,11 @@ void UpdatePlayer()
 						}
 					}
 				}
-				if (Map[i].type == COIN && !Map[i].coinGet)
+				if (Map[i].type == COIN && Map[i].active)
 				{
 					//PlaySE(SE_COIN);
 					TotalGetCoin++;
 					StageGetCoin++;
-					Map[i].coinGet = true;
 					Map[i].coinEffect = true;
 				}
 				if (Map[i].type == ENEMY || Map[i].type == SKY_ENEMY)
@@ -337,12 +335,11 @@ void UpdatePlayer()
 			// 右方向（左の壁にぶつかる）
 			else if (prevHitX + PLAYER_BOX_COLLISION_WIDTH < Map[i].pos.x && Map[i].type != ONE_WAY_BLOCK)
 			{
-				if (Map[i].type == COIN && !Map[i].coinGet)
+				if (Map[i].type == COIN && Map[i].active)
 				{
 					//PlaySE(SE_COIN);
 					TotalGetCoin++;
 					StageGetCoin++;
-					Map[i].coinGet = true;
 					Map[i].coinEffect = true;
 				}
 				if (Map[i].type == NORMAL_BLOCK)
@@ -366,12 +363,11 @@ void UpdatePlayer()
 			// 【3】左方向（右の壁にぶつかる）
 			else if (prevHitX > Map[i].pos.x + MAP_CHIP_WIDTH && Map[i].type != ONE_WAY_BLOCK)
 			{
-				if (Map[i].type == COIN && !Map[i].coinGet)
+				if (Map[i].type == COIN && Map[i].active)
 				{
 					//PlaySE(SE_COIN);
 					TotalGetCoin++;
 					StageGetCoin++;
-					Map[i].coinGet = true;
 					Map[i].coinEffect = true;
 				}
 				if (Map[i].type == NORMAL_BLOCK)
@@ -395,12 +391,11 @@ void UpdatePlayer()
 			// 【4】上方向（天井）
 			else if (prevHitY > blockDrawY + MAP_CHIP_HEIGHT && Map[i].type != ONE_WAY_BLOCK && Map[i].type != DESTROY_BLOCK)
 			{
-				if (Map[i].type == COIN && !Map[i].coinGet)
+				if (Map[i].type == COIN && Map[i].active)
 				{
 					//PlaySE(SE_COIN);
 					TotalGetCoin++;
 					StageGetCoin++;
-					Map[i].coinGet = true;
 					Map[i].coinEffect = true;
 				}
 				if (Map[i].type != COIN)
@@ -441,6 +436,7 @@ void DrawPlayer()
 
 	DrawGraph((int)g_PlayerData.pos.x - camera.pos.x, (int)g_PlayerData.pos.y - camera.pos.y, g_PlayerData.handle, TRUE);
 	DrawFormatString(0, 0, GetColor(0, 0, 0), "獲得コイン：%d / 5", TotalGetCoin);
+	DrawFormatString(800, 400, GetColor(0, 0, 0), "%f", effectTime);
 }
 
 void FinPlayer()

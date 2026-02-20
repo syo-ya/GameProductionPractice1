@@ -5,9 +5,6 @@ int g_InputState = 0;
 
 int g_PrevInputState = 0;
 
-int rx;
-int ry;
-
 void InitInput()
 {
 	g_InputState = 0;
@@ -16,8 +13,6 @@ void InitInput()
 
 void UpdateInput()
 {
-	GetJoypadAnalogInputRight(&rx, &ry, DX_INPUT_PAD1);
-
 	g_PrevInputState = g_InputState;
 
 	g_InputState = 0;
@@ -30,17 +25,21 @@ void UpdateInput()
 	{
 		g_InputState |= KEY_SPACE;
 	}
-	if (CheckHitKey(KEY_INPUT_A) || rx < -500)
+	if (CheckHitKey(KEY_INPUT_A))
 	{
 		g_InputState |= KEY_A;
 	}
-	if (CheckHitKey(KEY_INPUT_W) || ry < -500)
+	if (CheckHitKey(KEY_INPUT_W))
 	{
 		g_InputState |= KEY_W;
 	}
-	if (CheckHitKey(KEY_INPUT_D) || rx > 500)
+	if (CheckHitKey(KEY_INPUT_D))
 	{
 		g_InputState |= KEY_D;
+	}
+	if (CheckHitKey(KEY_INPUT_S))
+	{
+		g_InputState |= KEY_S;
 	}
 	if (CheckHitKey(KEY_INPUT_X) || (GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_3) != 0)
 	{

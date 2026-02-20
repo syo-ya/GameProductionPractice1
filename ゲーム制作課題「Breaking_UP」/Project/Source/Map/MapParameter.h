@@ -31,8 +31,6 @@ struct MapData
 	VECTOR pos;
 	bool EnemyKill = false;
 	bool coinEffect = false;
-	bool coinGet = false;
-	bool coinGetClear = false;
 };
 
 struct MapChipData
