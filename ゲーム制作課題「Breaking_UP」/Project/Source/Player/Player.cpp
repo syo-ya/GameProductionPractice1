@@ -72,6 +72,7 @@ void InitPlayer()
 	g_PlayerData.move.x = 0.0f;
 	g_PlayerData.move.y = 0.0f;
 	g_PlayerData.playAnim = PLAYER_ANIM_NONE;
+	g_PlayerData.isTurn = false;
 
 	for (int i = 0; i < PLAYER_ANIM_MAX; i++)
 	{

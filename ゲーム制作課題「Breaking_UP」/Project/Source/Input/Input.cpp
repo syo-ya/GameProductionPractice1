@@ -69,6 +69,10 @@ void UpdateInput()
 	{
 		g_InputState |= KEY_LEFT;
 	}
+	if (CheckHitKey(KEY_INPUT_RETURN) || (GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_X) != 0)
+	{
+		g_InputState |= KEY_RETURN;
+	}
 	
 }
 void DrawInput()
@@ -85,4 +89,9 @@ bool IsInputKey(InputKey key)
 bool IsTriggerKey(InputKey key)
 {
 	return (g_InputState & key) && !(g_PrevInputState & key);
+}
+
+bool IsReleaseKey(InputKey key)
+{
+	return !(g_InputState & key) && (g_PrevInputState & key);
 }

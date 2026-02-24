@@ -19,8 +19,10 @@ enum InputKey
     KEY_UP = 1 << 9,
     KEY_DOWN = 1 << 10,
     KEY_RIGHT = 1 << 11,
-    KEY_LEFT = 1 << 12
+    KEY_LEFT = 1 << 12,
+    KEY_RETURN = 1 << 13
 };
 
 bool IsInputKey(InputKey key);
 bool IsTriggerKey(InputKey key);
+bool IsReleaseKey(InputKey key);

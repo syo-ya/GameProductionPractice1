@@ -43,6 +43,8 @@ int BlockHandle11 = -1;
 
 void InitBullet()
 {
+	BulletDir = 1;
+
 	g_ArrowData.handle = LoadGraph("Data/Bullet/Arrow.png");
 
 	for (int i = 0; i < BULLET_NUM; i++)
