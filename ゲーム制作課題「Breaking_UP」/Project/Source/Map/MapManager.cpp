@@ -22,16 +22,6 @@ void StartMap()
 	CreateMap();
 }
 
-void StepMap()
-{
-	StepMapData();
-}
-
-void UpdateMap()
-{
-	UpdateMapData();
-}
-
 void DrawMap()
 {
 	DrawMapData();

@@ -3,9 +3,6 @@
 
 void InitMapData();
 void LoadMapData();
-void StartMapData();
-void StepMapData();
-void UpdateMapData();
 void DrawMapData();
 void FinMapData();
 

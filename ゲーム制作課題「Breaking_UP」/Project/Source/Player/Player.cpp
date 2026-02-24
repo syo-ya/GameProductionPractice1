@@ -9,13 +9,13 @@
 #include "../Sound/Sound.h"
 #include "../Map/Map.h"
 #include "../Bullet/Bullet.h"
+#include "../Enemy/Enemy.h"
 #include "math.h"
 
 PlayerData g_PlayerData = { 0 };
 PlayerData g_PrevPlayerData = { 0 };
 
-int TotalGetCoin = 0;
-int StageGetCoin = 0;
+int GetCoin = 0;
 
 float effectTime = 0.0f;
 
@@ -60,6 +60,7 @@ void UpdatePlayerAnimation();
 
 void InitPlayer()
 {
+	GetCoin = 0;
 	gameOver = false;
 	gameClear = false;
 	SECooltime = true;
@@ -308,14 +309,13 @@ void UpdatePlayer()
 				if (Map[i].type == COIN && Map[i].active)
 				{
 					//PlaySE(SE_COIN);
-					TotalGetCoin++;
-					StageGetCoin++;
+					GetCoin++;
 					Map[i].coinEffect = true;
 				}
 				if (Map[i].type == ENEMY || Map[i].type == SKY_ENEMY)
 				{
 					JumpInput = true;
-					//EnemyKill(i);
+					EnemyKill(i);
 				}
 				if (Map[i].type == NEEDLE_BLOCK)
 				{
@@ -336,8 +336,7 @@ void UpdatePlayer()
 				if (Map[i].type == COIN && Map[i].active)
 				{
 					//PlaySE(SE_COIN);
-					TotalGetCoin++;
-					StageGetCoin++;
+					GetCoin++;
 					Map[i].coinEffect = true;
 				}
 				if (Map[i].type == NORMAL_BLOCK || Map[i].type == DESTROY_BLOCK)
@@ -364,8 +363,7 @@ void UpdatePlayer()
 				if (Map[i].type == COIN && Map[i].active)
 				{
 					//PlaySE(SE_COIN);
-					TotalGetCoin++;
-					StageGetCoin++;
+					GetCoin++;
 					Map[i].coinEffect = true;
 				}
 				if (Map[i].type == NORMAL_BLOCK || Map[i].type == DESTROY_BLOCK)
@@ -392,8 +390,7 @@ void UpdatePlayer()
 				if (Map[i].type == COIN && Map[i].active)
 				{
 					//PlaySE(SE_COIN);
-					TotalGetCoin++;
-					StageGetCoin++;
+					GetCoin++;
 					Map[i].coinEffect = true;
 				}
 				if (Map[i].type != COIN)
@@ -433,7 +430,7 @@ void DrawPlayer()
 	DrawAnimation(animData, g_PlayerData.pos.x - camera.pos.x, g_PlayerData.pos.y - camera.pos.y, g_PlayerData.isTurn);
 
 	DrawGraph((int)g_PlayerData.pos.x - camera.pos.x, (int)g_PlayerData.pos.y - camera.pos.y, g_PlayerData.handle, TRUE);
-	DrawFormatString(0, 0, GetColor(0, 0, 0), "獲得コイン：%d / 5", TotalGetCoin);
+	DrawFormatString(0, 0, GetColor(0, 0, 0), "獲得コイン：%d / %d", GetCoin, CLEAR_COIN_NUM);
 }
 
 void FinPlayer()

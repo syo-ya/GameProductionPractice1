@@ -2,6 +2,7 @@
 #include "../GameSetting/GameSetting.h"
 #include "MapParameter.h"
 #include "../Camera/Camera.h"
+#include "../Enemy/Enemy.h"
 
 
 MapData g_Maps[BLOCK_MAX] = { 0 };
@@ -28,18 +29,6 @@ void LoadMapData()
 	g_MapHandle[GOAL] = LoadGraph("Data/Map/Goal.png");
 }
 
-void StartMapData()
-{
-}
-
-void StepMapData()
-{
-}
-
-void UpdateMapData()
-{
-}
-
 void DrawMapData()
 {
 	CameraData camera = GetCamera();
@@ -55,6 +44,7 @@ void DrawMapData()
 
 void FinMapData()
 {
+	ResetEnemy();
 	MapData* Map = g_Maps;
 	for (int i = 0; i < BLOCK_MAX; i++, Map++)
 	{

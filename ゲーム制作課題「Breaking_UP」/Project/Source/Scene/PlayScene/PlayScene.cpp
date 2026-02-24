@@ -2,7 +2,7 @@
 #include "../../Player/Player.h"
 #include "../../Scene/SceneManager.h"
 #include "../../Bullet/Bullet.h"
-//#include "../../Enemy/EnemyManager.h"
+#include "../../Enemy/Enemy.h"
 #include "../../Collision/Collision.h"
 #include "../../Map/MapManager.h"
 #include "../../Camera/Camera.h"
@@ -17,46 +17,34 @@ void InitPlayScene()
 	InitPlayer();
 	InitCamera();
 	InitBullet();
-	// エネミー初期化
-	//InitEnemy();
+	InitEnemy();
 }
 
 void LoadPlayScene()
 {
 	LoadMap();
 	LoadPlayer();
-	// エネミーロード
-	//LoadEnemy();
 }
 
 void StartPlayScene()
 {
 	StartMap();
 	StartPlayer();
-
-	//StepPlayer();
 }
 
 void StepPlayScene()
 {
-	StepMap();
 	StepPlayer();
 	StepCamera();
-	
-	// 敵更新
-	//StepEnemy();
+	StepEnemy();
 }
 
 
 void UpdatePlayScene()
 {
-	UpdateMap();
 	UpdatePlayer();
 	UpdateBullet();
-
-	// エネミー更新
-	//UpdateEnemy();
-
+	UpdateEnemy();
 	CheckCollision();
 }
 
@@ -66,10 +54,6 @@ void DrawPlayScene()
 	DrawCamera();
 	DrawMap();
 	DrawBullet();
-
-	// エネミー描画
-	//DrawEnemy();
-
 	DrawPlayer();
 }
 
@@ -78,7 +62,4 @@ void FinPlayScene()
 	FinMap();
 	FinPlayer();
 	FinBullet();
-
-	// エネミー終了
-	//FinEnemy();
 }
