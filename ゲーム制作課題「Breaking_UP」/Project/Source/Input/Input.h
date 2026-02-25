@@ -20,7 +20,8 @@ enum InputKey
     KEY_DOWN = 1 << 10,
     KEY_RIGHT = 1 << 11,
     KEY_LEFT = 1 << 12,
-    KEY_RETURN = 1 << 13
+    KEY_L = 1 << 13,
+    KEY_R = 1 << 14
 };
 
 bool IsInputKey(InputKey key);

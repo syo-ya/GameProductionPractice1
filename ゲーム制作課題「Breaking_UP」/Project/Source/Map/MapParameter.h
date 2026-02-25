@@ -32,7 +32,7 @@ struct MapData
 	bool EnemyKill = false;
 	bool coinEffect = false;
 	float BreakFlg = -1;
-	float BreakTime = 0.0f;
+	float EffectTime = 0.0f;
 };
 
 struct MapChipData

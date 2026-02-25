@@ -25,6 +25,7 @@ struct BulletData
 	bool Hit;
 	bool Fire;
 	float LifeTime;
+	float EffectTime;
 };
 
 struct ArrowData

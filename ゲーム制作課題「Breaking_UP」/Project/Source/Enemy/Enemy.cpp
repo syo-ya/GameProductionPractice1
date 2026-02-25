@@ -17,8 +17,6 @@ float FPS = rFPS();
 
 float time = 0.0f;
 
-float KillTime = 0.0f;
-
 float walkSpeed = 1.0f;
 
 MapData* Map = GetMaps();
@@ -263,41 +261,41 @@ void UpdateEnemy()
 			{
 				if (FPS > 0)
 				{
-					KillTime += 1.00f / FPS;
+					Map[i].EffectTime += 1.00f / FPS;
 				}
 				else
 				{
-					KillTime += 1.00f / 60.00f;
+					Map[i].EffectTime += 1.00f / 60.00f;
 				}
 
-				if (KillTime >= 0.0f && KillTime < 0.03f)
+				if (Map[i].EffectTime >= 0.0f && Map[i].EffectTime < 0.03f)
 				{
 					Map[i].handle = EnemyGKillHandle1;
 				}
-				else if (KillTime >= 0.03f && KillTime < 0.06f)
+				else if (Map[i].EffectTime >= 0.03f && Map[i].EffectTime < 0.06f)
 				{
 					Map[i].handle = EnemyGKillHandle2;
 				}
-				else if (KillTime >= 0.06f && KillTime < 0.09f)
+				else if (Map[i].EffectTime >= 0.06f && Map[i].EffectTime < 0.09f)
 				{
 					Map[i].handle = EnemyGKillHandle3;
 				}
-				else if (KillTime >= 0.09f && KillTime < 0.12f)
+				else if (Map[i].EffectTime >= 0.09f && Map[i].EffectTime < 0.12f)
 				{
 					Map[i].handle = EnemyGKillHandle4;
 				}
-				else if (KillTime >= 0.12f && KillTime < 0.15f)
+				else if (Map[i].EffectTime >= 0.12f && Map[i].EffectTime < 0.15f)
 				{
 					Map[i].handle = EnemyGKillHandle5;
 				}
-				else if (KillTime >= 0.15f && KillTime < 0.3f)
+				else if (Map[i].EffectTime >= 0.15f && Map[i].EffectTime < 0.3f)
 				{
 					Map[i].handle = EnemyGKillHandle6;
 				}
-				else if (KillTime >= 0.3f)
+				else if (Map[i].EffectTime >= 0.3f)
 				{
 					Map[i].active = false;
-					KillTime = 0.0f;
+					Map[i].EffectTime = 0.0f;
 				}
 			}
 		}
@@ -318,41 +316,41 @@ void UpdateEnemy()
 			{
 				if (FPS > 0)
 				{
-					KillTime += 1.00f / FPS;
+					Map[i].EffectTime += 1.00f / FPS;
 				}
 				else
 				{
-					KillTime += 1.00f / 60.00f;
+					Map[i].EffectTime += 1.00f / 60.00f;
 				}
 
-				if (KillTime >= 0.0f && KillTime < 0.03f)
+				if (Map[i].EffectTime >= 0.0f && Map[i].EffectTime < 0.03f)
 				{
 					Map[i].handle = EnemyRKillHandle1;
 				}
-				else if (KillTime >= 0.03f && KillTime < 0.06f)
+				else if (Map[i].EffectTime >= 0.03f && Map[i].EffectTime < 0.06f)
 				{
 					Map[i].handle = EnemyRKillHandle2;
 				}
-				else if (KillTime >= 0.06f && KillTime < 0.09f)
+				else if (Map[i].EffectTime >= 0.06f && Map[i].EffectTime < 0.09f)
 				{
 					Map[i].handle = EnemyRKillHandle3;
 				}
-				else if (KillTime >= 0.09f && KillTime < 0.12f)
+				else if (Map[i].EffectTime >= 0.09f && Map[i].EffectTime < 0.12f)
 				{
 					Map[i].handle = EnemyRKillHandle4;
 				}
-				else if (KillTime >= 0.12f && KillTime < 0.15f)
+				else if (Map[i].EffectTime >= 0.12f && Map[i].EffectTime < 0.15f)
 				{
 					Map[i].handle = EnemyRKillHandle5;
 				}
-				else if (KillTime >= 0.15f && KillTime < 0.3f)
+				else if (Map[i].EffectTime >= 0.15f && Map[i].EffectTime < 0.3f)
 				{
 					Map[i].handle = EnemyRKillHandle6;
 				}
-				else if (KillTime >= 0.3f)
+				else if (Map[i].EffectTime >= 0.3f)
 				{
 					Map[i].active = false;
-					KillTime = 0.0f;
+					Map[i].EffectTime = 0.0f;
 				}
 			}
 		}
@@ -373,41 +371,41 @@ void UpdateEnemy()
 			{
 				if (FPS > 0)
 				{
-					KillTime += 1.00f / FPS;
+					Map[i].EffectTime += 1.00f / FPS;
 				}
 				else
 				{
-					KillTime += 1.00f / 60.00f;
+					Map[i].EffectTime += 1.00f / 60.00f;
 				}
 
-				if (KillTime >= 0.0f && KillTime < 0.03f)
+				if (Map[i].EffectTime >= 0.0f && Map[i].EffectTime < 0.03f)
 				{
 					Map[i].handle = EnemyBKillHandle1;
 				}
-				else if (KillTime >= 0.03f && KillTime < 0.06f)
+				else if (Map[i].EffectTime >= 0.03f && Map[i].EffectTime < 0.06f)
 				{
 					Map[i].handle = EnemyBKillHandle2;
 				}
-				else if (KillTime >= 0.06f && KillTime < 0.09f)
+				else if (Map[i].EffectTime >= 0.06f && Map[i].EffectTime < 0.09f)
 				{
 					Map[i].handle = EnemyBKillHandle3;
 				}
-				else if (KillTime >= 0.09f && KillTime < 0.12f)
+				else if (Map[i].EffectTime >= 0.09f && Map[i].EffectTime < 0.12f)
 				{
 					Map[i].handle = EnemyBKillHandle4;
 				}
-				else if (KillTime >= 0.12f && KillTime < 0.15f)
+				else if (Map[i].EffectTime >= 0.12f && Map[i].EffectTime < 0.15f)
 				{
 					Map[i].handle = EnemyBKillHandle5;
 				}
-				else if (KillTime >= 0.15f && KillTime < 0.3f)
+				else if (Map[i].EffectTime >= 0.15f && Map[i].EffectTime < 0.3f)
 				{
 					Map[i].handle = EnemyBKillHandle6;
 				}
-				else if (KillTime >= 0.3f)
+				else if (Map[i].EffectTime >= 0.3f)
 				{
 					Map[i].active = false;
-					KillTime = 0.0f;
+					Map[i].EffectTime = 0.0f;
 				}
 			}
 		}
@@ -421,7 +419,7 @@ void EnemyKill(int i)
 	{
 		Map[i].EnemyKill = true;
 		//PlaySE(SE_ENEMY_KILL);
-		KillTime = 0.0f;
+		Map[i].EffectTime = 0.0f;
 	}
 }
 

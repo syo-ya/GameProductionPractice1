@@ -113,6 +113,15 @@ void StepPlayer()
 			PLAYER_JUMP_MAX = 12.0f;
 
 		}
+		
+		/*å„Ç©ÇÁè¡Ç∑*/
+		else if (IsInputKey(KEY_R))
+		{
+			PLAYER_MOVE_MAX = 10.0f;
+			PLAYER_JUMP_MAX = 20.0f;
+
+		}
+
 		else
 		{
 			PLAYER_MOVE_MAX = 3.5f;
@@ -231,37 +240,37 @@ void UpdatePlayer()
 			{
 				if (rFPS() > 0)
 				{
-					effectTime += 1.00f / rFPS();
+					Map[i].EffectTime += 1.00f / rFPS();
 				}
 				else
 				{
-					effectTime += 1.00f / 60.00f;
+					Map[i].EffectTime += 1.00f / 60.00f;
 				}
 
-				if (effectTime >= 0.0f && effectTime < 0.05f)
+				if (Map[i].EffectTime >= 0.0f && Map[i].EffectTime < 0.05f)
 				{
 					Map[i].handle = Coinhandle;
 				}
-				else if (effectTime >= 0.05f && effectTime < 0.10f)
+				else if (Map[i].EffectTime >= 0.05f && Map[i].EffectTime < 0.10f)
 				{
 					Map[i].handle = GetCoinhandle1;
 				}
-				else if (effectTime >= 0.10f && effectTime < 0.15f)
+				else if (Map[i].EffectTime >= 0.10f && Map[i].EffectTime < 0.15f)
 				{
 					Map[i].handle = GetCoinhandle2;
 				}
-				else if (effectTime >= 0.15f && effectTime < 0.20f)
+				else if (Map[i].EffectTime >= 0.15f && Map[i].EffectTime < 0.20f)
 				{
 					Map[i].handle = GetCoinhandle3;
 				}
-				else if (effectTime >= 0.20f && effectTime < 0.30f)
+				else if (Map[i].EffectTime >= 0.20f && Map[i].EffectTime < 0.30f)
 				{
 					Map[i].handle = GetCoinhandle4;
 				}
-				else if (effectTime >= 0.30f)
+				else if (Map[i].EffectTime >= 0.30f)
 				{
 					Map[i].active = false;
-					effectTime = 0.0f;
+					Map[i].EffectTime = 0.0f;
 				}
 			}
 			if (!Map[i].active)
@@ -278,7 +287,9 @@ void UpdatePlayer()
 		float playerHitW = PLAYER_BOX_COLLISION_WIDTH;
 		float playerHitH = PLAYER_BOX_COLLISION_HEIGHT;
 
-		if (!GamePlayBool())
+
+
+		if (!GamePlayBool() && /*å„Ç©ÇÁè¡Ç∑*/!IsInputKey(KEY_L))
 		{
 			if (!CheckSquareSquare(playerHitX, playerHitY, playerHitW, playerHitH,
 				Map[i].pos.x, blockDrawY, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))

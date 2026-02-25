@@ -69,9 +69,13 @@ void UpdateInput()
 	{
 		g_InputState |= KEY_LEFT;
 	}
-	if (CheckHitKey(KEY_INPUT_RETURN) || (GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_X) != 0)
+	if ((GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_5) != 0)
 	{
-		g_InputState |= KEY_RETURN;
+		g_InputState |= KEY_L;
+	}
+	if ((GetJoypadInputState(DX_INPUT_PAD1) & PAD_INPUT_6) != 0)
+	{
+		g_InputState |= KEY_R;
 	}
 	
 }

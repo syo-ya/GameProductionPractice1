@@ -67,7 +67,7 @@ MapData* CreateMap(MapChipType type, VECTOR pos)
 			Map->pos = pos;
 			Map->type = type;
 			Map->BreakFlg = -1;
-			Map->BreakTime = 0.0f;
+			Map->EffectTime = 0.0f;
 			return Map;
 		}
 	}
