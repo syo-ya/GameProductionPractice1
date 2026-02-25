@@ -11,6 +11,8 @@
 // 待機時間タイマー
 int g_WaitTimer = 0;
 
+int g_GameOverHandle = 0;
+
 void InitGameOverScene()
 {
 	// 背景初期化
@@ -18,6 +20,8 @@ void InitGameOverScene()
 
 	// タイマー初期化
 	g_WaitTimer = 0;
+
+	int g_GameOverHandle = 0;
 }
 
 void LoadGameOverScene()
@@ -26,6 +30,8 @@ void LoadGameOverScene()
 	//LoadBackGround("Data/GameOver/gameover.PNG", BACK_GROUND_LAYER_1);
 	// 背景スクロール
 	//SetBackGroundMove(BACK_GROUND_SPEED, 0.0f, BACK_GROUND_LAYER_1);
+
+	g_GameOverHandle = LoadGraph("Data/Logo/GameOver.png");
 }
 
 void StartGameOverScene()
@@ -61,15 +67,16 @@ void UpdateGameOverScene()
 
 void DrawGameOverScene()
 {
-	// ゲームオーバーのメッセージを描画
-    DrawString(700, 400, "ゲームオーバー", GetColor(255, 0, 0));
-    DrawString(660, 500, "SPACEキーでタイトルへ戻る", GetColor(255, 255, 255));
 	// 背景描画
 	//DrawBackGround();
+
+	DrawGraph(0, 0, g_GameOverHandle, TRUE);
 }
 
 void FinGameOverScene()
 {
 	// 背景終了
 	//FinBackGround();
+
+	DeleteGraph(g_GameOverHandle);
 }
