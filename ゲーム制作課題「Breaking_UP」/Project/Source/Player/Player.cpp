@@ -328,7 +328,10 @@ void UpdatePlayer()
 				}
 				if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
 				{
-					gameClear = true;
+					if (GetCoin >= CLEAR_COIN_NUM)
+					{
+						gameClear = true;
+					}
 				}
 			}
 			// 右方向（左の壁にぶつかる）
@@ -355,7 +358,10 @@ void UpdatePlayer()
 				}
 				if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
 				{
-					gameClear = true;
+					if (GetCoin >= CLEAR_COIN_NUM)
+					{
+						gameClear = true;
+					}
 				}
 			}
 			// 【3】左方向（右の壁にぶつかる）
@@ -382,7 +388,10 @@ void UpdatePlayer()
 				}
 				if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
 				{
-					gameClear = true;
+					if (GetCoin >= CLEAR_COIN_NUM)
+					{
+						gameClear = true;
+					}
 				}
 			}
 			// 【4】上方向（天井）
@@ -410,7 +419,10 @@ void UpdatePlayer()
 				}
 				if (Map[i].type == GOAL || Map[i].type == GOAL_POINT)
 				{
-					gameClear = true;
+					if (GetCoin >= CLEAR_COIN_NUM)
+					{
+						gameClear = true;
+					}
 				}
 			}
 			else if ((Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY) && !Map[i].EnemyKill)

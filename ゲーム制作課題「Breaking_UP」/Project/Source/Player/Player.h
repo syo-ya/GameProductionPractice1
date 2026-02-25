@@ -21,7 +21,7 @@
 #define PLAYER_BOX_COLLISION_WIDTH (20)
 #define PLAYER_BOX_COLLISION_HEIGHT (44)
 
-#define CLEAR_COIN_NUM	(10)
+#define CLEAR_COIN_NUM	(15)
 
 enum PlayerAnimationType
 {
