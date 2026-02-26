@@ -282,7 +282,7 @@ void UpdateBullet()
 			{
 				for (int v = 0; v < BLOCK_MAX; v++)
 				{
-					if (Map[j].EffectTime > 0.05f)
+					if (Map[j].EffectTime > 0.04f)
 					{
 						if ((Map[j].ChipY == Map[v].ChipY) && (Map[j].ChipX - Map[v].ChipX == 1 || Map[v].ChipX - Map[j].ChipX == 1) && (Map[v].BreakFlg == 1 || Map[v].BreakFlg == 0))
 						{
