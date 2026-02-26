@@ -52,7 +52,7 @@ void InitBullet()
 	BulletDir = 1;
 
 	g_ArrowData.handle = LoadGraph("Data/Bullet/Arrow.png");
-	
+
 	for (int i = 0; i < BULLET_NUM; i++)
 	{
 		g_BulletData[i].active = false;
@@ -218,7 +218,7 @@ void UpdateBullet()
 				{
 					g_BulletData[i].Hit = true;
 				}
-				if (Map[j].type == DESTROY_BLOCK)
+				if (Map[j].type == DESTROY_BLOCK || Map[j].type == DESTROY_BLOCK_2)
 				{
 					if (Map[j].BreakFlg == -1)
 					{
@@ -240,7 +240,8 @@ void UpdateBullet()
 	MapData* Map = GetMaps();
 	for (int j = 0; j < BLOCK_MAX; j++)
 	{
-		if (Map[j].type == DESTROY_BLOCK)
+
+		if (Map[j].type == DESTROY_BLOCK || Map[j].type == DESTROY_BLOCK_2)
 		{
 			if (Map[j].BreakFlg == 0)
 			{
@@ -253,23 +254,23 @@ void UpdateBullet()
 					Map[j].EffectTime += 1.00f / 60.00f;
 				}
 
-				if (Map[j].EffectTime >= 0.0f && Map[j].EffectTime < 0.05f)
+				if (Map[j].EffectTime >= 0.0f && Map[j].EffectTime < 0.04f)
 				{
 					Map[j].handle = BlockHandle1;
 				}
-				else if (Map[j].EffectTime >= 0.05f && Map[j].EffectTime < 0.10f)
+				else if (Map[j].EffectTime >= 0.04f && Map[j].EffectTime < 0.08f)
 				{
 					Map[j].handle = BlockHandle2;
 				}
-				else if (Map[j].EffectTime >= 0.10f && Map[j].EffectTime < 0.15f)
+				else if (Map[j].EffectTime >= 0.08f && Map[j].EffectTime < 0.12f)
 				{
 					Map[j].handle = BlockHandle3;
 				}
-				else if (Map[j].EffectTime >= 0.15f && Map[j].EffectTime < 0.20f)
+				else if (Map[j].EffectTime >= 0.12f && Map[j].EffectTime < 0.16f)
 				{
 					Map[j].handle = BlockHandle4;
 				}
-				else if (Map[j].EffectTime >= 0.20f && Map[j].EffectTime < 0.25f)
+				else if (Map[j].EffectTime >= 0.16f && Map[j].EffectTime < 0.20f)
 				{
 					Map[j].handle = BlockHandle5;
 					Map[j].EffectTime = 0.0f;
@@ -279,6 +280,23 @@ void UpdateBullet()
 
 			if (Map[j].BreakFlg == 2)
 			{
+				for (int v = 0; v < BLOCK_MAX; v++)
+				{
+					if (Map[j].EffectTime > 0.05f)
+					{
+						if ((Map[j].ChipY == Map[v].ChipY) && (Map[j].ChipX - Map[v].ChipX == 1 || Map[v].ChipX - Map[j].ChipX == 1) && (Map[v].BreakFlg == 1 || Map[v].BreakFlg == 0))
+						{
+							Map[v].EffectTime = 0.0f;
+							Map[v].BreakFlg = 2;
+						}
+						if ((Map[j].ChipX == Map[v].ChipX) && (Map[j].ChipY - Map[v].ChipY == 1 || Map[v].ChipY - Map[j].ChipY == 1) && (Map[v].BreakFlg == 1 || Map[v].BreakFlg == 0))
+						{
+							Map[v].EffectTime = 0.0f;
+							Map[v].BreakFlg = 2;
+						}
+					}
+				}
+
 				if (rFPS() > 0)
 				{
 					Map[j].EffectTime += 1.00f / rFPS();
@@ -288,27 +306,27 @@ void UpdateBullet()
 					Map[j].EffectTime += 1.00f / 60.00f;
 				}
 
-				if (Map[j].EffectTime >= 0.0f && Map[j].EffectTime < 0.03f)
+				if (Map[j].EffectTime >= 0.0f && Map[j].EffectTime < 0.04f)
 				{
 					Map[j].handle = BlockHandle6;
 				}
-				else if (Map[j].EffectTime >= 0.03f && Map[j].EffectTime < 0.06f)
+				else if (Map[j].EffectTime >= 0.04f && Map[j].EffectTime < 0.08f)
 				{
 					Map[j].handle = BlockHandle7;
 				}
-				else if (Map[j].EffectTime >= 0.06f && Map[j].EffectTime < 0.09f)
+				else if (Map[j].EffectTime >= 0.08f && Map[j].EffectTime < 0.12f)
 				{
 					Map[j].handle = BlockHandle8;
 				}
-				else if (Map[j].EffectTime >= 0.09f && Map[j].EffectTime < 0.12f)
+				else if (Map[j].EffectTime >= 0.12f && Map[j].EffectTime < 0.16f)
 				{
 					Map[j].handle = BlockHandle9;
 				}
-				else if (Map[j].EffectTime >= 0.12f && Map[j].EffectTime < 0.15f)
+				else if (Map[j].EffectTime >= 0.16f && Map[j].EffectTime < 0.20f)
 				{
 					Map[j].handle = BlockHandle10;
 				}
-				else if (Map[j].EffectTime > 0.15f)
+				else if (Map[j].EffectTime > 0.20f)
 				{
 					Map[j].handle = BlockHandle11;
 					Map[j].EffectTime = 0.0f;

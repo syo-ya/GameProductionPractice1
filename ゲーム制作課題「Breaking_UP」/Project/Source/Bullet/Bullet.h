@@ -10,7 +10,7 @@
 #define BULLET_HEIGHT	(16)
 #define BULLET_RADIUS	(8)
 
-#define BULLET_OFFSET	(4)
+#define BULLET_OFFSET	(3)
 
 #define ARROW_RADIUS	(12.5f)
 #define ARROW_SIZE	(25.0f)

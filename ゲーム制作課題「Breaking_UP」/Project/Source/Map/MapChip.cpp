@@ -34,7 +34,7 @@ void CreateMap()
 			if (type == MAP_CHIP_NONE) continue;
 
 			VECTOR pos = VGet(j * MAP_CHIP_WIDTH, i * MAP_CHIP_HEIGHT, 0.0f);
-			g_MapChip[i][j].data = CreateMap(type, pos);
+			g_MapChip[i][j].data = CreateMap(type, pos, j, i);
 		}
 	}
 }

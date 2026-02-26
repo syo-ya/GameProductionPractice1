@@ -305,7 +305,7 @@ void UpdatePlayer()
 			{
 				if (!Map[i].EnemyKill)
 				{
-					if (Map[i].type == NORMAL_BLOCK || Map[i].type == ONE_WAY_BLOCK || Map[i].type == DESTROY_BLOCK || Map[i].type == ENEMY || Map[i].type == SKY_ENEMY)
+					if (Map[i].type == NORMAL_BLOCK || Map[i].type == ONE_WAY_BLOCK || Map[i].type == DESTROY_BLOCK || Map[i].type == DESTROY_BLOCK_2 || Map[i].type == ENEMY || Map[i].type == SKY_ENEMY)
 					{
 						g_PlayerData.pos.y = blockDrawY - (PLAYER_BOX_COLLISION_OFFSET_Y + PLAYER_BOX_COLLISION_HEIGHT) - PLAYER_MAP_COLLISION_OFFSET;
 						g_PlayerData.move.y = 0.0f;
@@ -354,7 +354,7 @@ void UpdatePlayer()
 					GetCoin++;
 					Map[i].coinEffect = true;
 				}
-				if (Map[i].type == NORMAL_BLOCK || Map[i].type == DESTROY_BLOCK)
+				if (Map[i].type == NORMAL_BLOCK || Map[i].type == DESTROY_BLOCK || Map[i].type == DESTROY_BLOCK_2)
 				{
 					g_PlayerData.pos.x = Map[i].pos.x - (PLAYER_BOX_COLLISION_OFFSET_X + PLAYER_BOX_COLLISION_WIDTH) - PLAYER_MAP_COLLISION_OFFSET;
 					g_PlayerData.move.x = 0.0f;
@@ -384,7 +384,7 @@ void UpdatePlayer()
 					GetCoin++;
 					Map[i].coinEffect = true;
 				}
-				if (Map[i].type == NORMAL_BLOCK || Map[i].type == DESTROY_BLOCK)
+				if (Map[i].type == NORMAL_BLOCK || Map[i].type == DESTROY_BLOCK || Map[i].type == DESTROY_BLOCK_2)
 				{
 					g_PlayerData.pos.x = Map[i].pos.x + MAP_CHIP_WIDTH - PLAYER_BOX_COLLISION_OFFSET_X + PLAYER_MAP_COLLISION_OFFSET;
 					g_PlayerData.move.x = 0.0f;

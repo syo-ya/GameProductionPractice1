@@ -12,6 +12,7 @@ enum MapChipType
 	MAP_CHIP_NONE,
 	NORMAL_BLOCK,
 	DESTROY_BLOCK,
+	DESTROY_BLOCK_2,
 	ONE_WAY_BLOCK,
 	NEEDLE_BLOCK,
 	GOAL,
@@ -33,6 +34,8 @@ struct MapData
 	bool coinEffect = false;
 	float BreakFlg = -1;
 	float EffectTime = 0.0f;
+	int ChipX;
+	int ChipY;
 };
 
 struct MapChipData

@@ -53,8 +53,8 @@ void DrawPlayScene()
 	DrawGraph(0, 0, PlayBG, TRUE);
 	DrawCamera();
 	DrawMap();
-	DrawBullet();
 	DrawPlayer();
+	DrawBullet();
 }
 
 void FinPlayScene()

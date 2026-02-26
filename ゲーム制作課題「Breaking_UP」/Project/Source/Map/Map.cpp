@@ -23,6 +23,7 @@ void LoadMapData()
 {
 	g_MapHandle[NORMAL_BLOCK] = LoadGraph("Data/Map/Normal_Block.png");
 	g_MapHandle[DESTROY_BLOCK] = LoadGraph("Data/Map/Destroy_Block/Block.png");
+	g_MapHandle[DESTROY_BLOCK_2] = LoadGraph("Data/Map/Destroy_Block/Block_Break_5.png");
 	g_MapHandle[ONE_WAY_BLOCK] = LoadGraph("Data/Map/One_Way_Block.png");
 	g_MapHandle[NEEDLE_BLOCK] = LoadGraph("Data/Map/Needle_Block.png");
 	g_MapHandle[COIN] = LoadGraph("Data/Map/Coin/Coin.png");
@@ -55,7 +56,7 @@ void FinMapData()
 	}
 }
 
-MapData* CreateMap(MapChipType type, VECTOR pos)
+MapData* CreateMap(MapChipType type, VECTOR pos, int chipX, int chipY)
 {
 	MapData* Map = g_Maps;
 	for (int i = 0; i < BLOCK_MAX; i++, Map++)
@@ -66,8 +67,17 @@ MapData* CreateMap(MapChipType type, VECTOR pos)
 			Map->handle = g_MapHandle[type];
 			Map->pos = pos;
 			Map->type = type;
-			Map->BreakFlg = -1;
+			if (Map->type == DESTROY_BLOCK_2)
+			{
+				Map->BreakFlg = 1;
+			}
+			else
+			{
+				Map->BreakFlg = -1;
+			}
 			Map->EffectTime = 0.0f;
+			Map->ChipX = chipX;
+			Map->ChipY = chipY;
 			return Map;
 		}
 	}
