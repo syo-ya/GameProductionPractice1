@@ -363,7 +363,7 @@ void UpdatePlayer()
 				{
 					gameOver = true;
 				}
-				if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY && !Map[i].EnemyKill)
+				if ((Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY) && !Map[i].EnemyKill)
 				{
 					gameOver = true;
 				}
@@ -375,7 +375,7 @@ void UpdatePlayer()
 					}
 				}
 			}
-			// 【3】左方向（右の壁にぶつかる）
+			// 左方向（右の壁にぶつかる）
 			else if (prevHitX > Map[i].pos.x + MAP_CHIP_WIDTH && Map[i].type != ONE_WAY_BLOCK)
 			{
 				if (Map[i].type == COIN && Map[i].active)
@@ -393,7 +393,7 @@ void UpdatePlayer()
 				{
 					gameOver = true;
 				}
-				if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY && !Map[i].EnemyKill)
+				if ((Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY) && !Map[i].EnemyKill)
 				{
 					gameOver = true;
 				}
@@ -405,7 +405,7 @@ void UpdatePlayer()
 					}
 				}
 			}
-			// 【4】上方向（天井）
+			// 上方向（天井）
 			else if (prevHitY > blockDrawY + MAP_CHIP_HEIGHT && Map[i].type != ONE_WAY_BLOCK)
 			{
 				if (Map[i].type == COIN && Map[i].active)
@@ -424,7 +424,7 @@ void UpdatePlayer()
 				{
 					gameOver = true;
 				}
-				if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY && !Map[i].EnemyKill)
+				if ((Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY) && !Map[i].EnemyKill)
 				{
 					gameOver = true;
 				}

@@ -4,6 +4,7 @@
 #include "../Sound/Sound.h"
 #include "../Camera/Camera.h"
 #include "../Player/Player.h"
+#include "../Enemy/Enemy.h"
 #include "../FPS/FPS.h"
 #include "../Map/Map.h"
 #include "../GameSetting/GameSetting.h"
@@ -217,6 +218,14 @@ void UpdateBullet()
 				if (Map[j].type == NORMAL_BLOCK || Map[j].type == NEEDLE_BLOCK)
 				{
 					g_BulletData[i].Hit = true;
+				}
+				if (Map[j].type == FIRE_ENEMY || Map[j].type == SKY_ENEMY || Map[j].type == ENEMY)
+				{
+					if (!Map[j].EnemyKill)
+					{
+						g_BulletData[i].Hit = true;
+						EnemyKill(j);
+					}
 				}
 				if (Map[j].type == DESTROY_BLOCK || Map[j].type == DESTROY_BLOCK_2)
 				{

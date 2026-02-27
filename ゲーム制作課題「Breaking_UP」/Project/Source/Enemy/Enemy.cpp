@@ -11,13 +11,9 @@
 
 bool EnemyWalk = true;
 
-bool isGround = false;
-
 float FPS = rFPS();
 
 float time = 0.0f;
-
-float walkSpeed = 1.0f;
 
 MapData* Map = GetMaps();
 
@@ -53,6 +49,11 @@ int EnemyBKillHandle6 = -1;
 
 void InitEnemy()
 {
+	for (int i = 0; i < BLOCK_MAX; i++)
+	{
+		g_EnemyData[i].move.x = ENEMY_MOVE_SPEED;
+	}
+
 	EnemyGHandleA = LoadGraph("Data/Enemy/G/Balloon_Enemy_1.png");
 	EnemyGHandleB = LoadGraph("Data/Enemy/G/Balloon_Enemy_2.png");
 	EnemyGKillHandle1 = LoadGraph("Data/Enemy/G/Balloon_Enemy_Kill_1.png");
@@ -98,150 +99,123 @@ void StepEnemy()
 		time = 0.0f;
 		EnemyWalk = !EnemyWalk;
 	}
+	MapData* Map = GetMaps();
+	for (int i = 0; i < BLOCK_MAX; i++)
+	{
+		if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY)
+		{
+			g_EnemyData[i].PrevPos = Map[i].pos;
+			if (g_EnemyData[i].move.y > ENEMY_GRAVITY_MAX)
+			{
+				g_EnemyData[i].move.y = ENEMY_GRAVITY_MAX;
+			}
+			g_EnemyData[i].move.y += ENEMY_GRAVITY;
+		}
+	}
 
+}
+
+void UpdateEnemy()
+{
 	MapData* Block = GetMaps();
-
 	for (int i = 0; i < BLOCK_MAX; i++)
 	{
 		if (!Map[i].active) continue;
 
 		if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY)
 		{
-			if (g_EnemyData[i].dirRight)
-			{
-				isGround = false;
-				for (int j = 0; j < BLOCK_MAX; j++)
-				{
-					if (!Block[j].active) continue;
-
-					if (Block[j].type == NORMAL_BLOCK || Block[j].type == NEEDLE_BLOCK || Block[j].type == ONE_WAY_BLOCK || Block[j].type == DESTROY_BLOCK || Block[j].type == ENEMY || Block[j].type == FIRE_ENEMY || Block[j].type == SKY_ENEMY)
-					{
-						if (Map[i].active && Block[j].active)
-						{
-							if (i != j)
-							{
-								if (Map[i].pos.y == Block[j].pos.y && Block[j].type != ONE_WAY_BLOCK)
-								{
-									if (Map[i].pos.x + MAP_CHIP_WIDTH - 1 >= Block[j].pos.x && Map[i].pos.x + MAP_CHIP_WIDTH - 1 <= Block[j].pos.x + MAP_CHIP_WIDTH)
-									{
-										g_EnemyData[i].dirRight = false;
-										if (Block[j].type == ENEMY)
-										{
-											g_EnemyData[j].dirRight = true;
-										}
-										if (Block[j].type == FIRE_ENEMY)
-										{
-											g_EnemyData[j].dirRight = true;
-										}
-										if (Block[j].type == SKY_ENEMY)
-										{
-											g_EnemyData[j].dirRight = true;
-										}
-									}
-								}
-								if (Map[i].type != SKY_ENEMY)
-								{
-									if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY)
-									{
-										if (Block[j].type == NORMAL_BLOCK || Block[j].type == NEEDLE_BLOCK || Block[j].type == ONE_WAY_BLOCK || Block[j].type == DESTROY_BLOCK)
-										{
-											if (Map[i].pos.y + MAP_CHIP_HEIGHT + 1 >= Block[j].pos.y && Map[i].pos.y + MAP_CHIP_HEIGHT + 1 <= Block[j].pos.y + MAP_CHIP_HEIGHT)
-											{
-												if (Map[i].pos.x + MAP_CHIP_WIDTH >= Block[j].pos.x && Map[i].pos.x + MAP_CHIP_WIDTH <= Block[j].pos.x + MAP_CHIP_WIDTH)
-												{
-													isGround = true;
-													break;
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-				if (!isGround && Map[i].type != SKY_ENEMY)
-				{
-					g_EnemyData[i].dirRight = false;
-				}
-			}
-			if (!g_EnemyData[i].dirRight)
-			{
-				isGround = false;
-				for (int j = 0; j < BLOCK_MAX; j++)
-				{
-					if (!Block[j].active) continue;
-
-					if (Block[j].type == NORMAL_BLOCK || Block[j].type == NEEDLE_BLOCK || Block[j].type == ONE_WAY_BLOCK || Block[j].type == DESTROY_BLOCK || Block[j].type == ENEMY || Block[j].type == FIRE_ENEMY || Block[j].type == SKY_ENEMY)
-					{
-						if (Map[i].active && Block[j].active)
-						{
-							if (i != j)
-							{
-								if (Map[i].pos.y == Block[j].pos.y && Block[j].type != ONE_WAY_BLOCK)
-								{
-									if (Map[i].pos.x <= Block[j].pos.x + MAP_CHIP_WIDTH && Map[i].pos.x >= Block[j].pos.x)
-									{
-										g_EnemyData[i].dirRight = true;
-										if (Block[j].type == ENEMY)
-										{
-											g_EnemyData[j].dirRight = false;
-										}
-										if (Block[j].type == FIRE_ENEMY)
-										{
-											g_EnemyData[j].dirRight = false;
-										}
-										if (Block[j].type == SKY_ENEMY)
-										{
-											g_EnemyData[j].dirRight = false;
-										}
-
-									}
-								}
-								if (Map[i].type != SKY_ENEMY)
-								{
-									if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY)
-									{
-										if (Block[j].type == NORMAL_BLOCK || Block[j].type == NEEDLE_BLOCK || Block[j].type == ONE_WAY_BLOCK || Block[j].type == DESTROY_BLOCK)
-										{
-											if (Map[i].pos.y + MAP_CHIP_HEIGHT + 1 >= Block[j].pos.y && Map[i].pos.y + MAP_CHIP_HEIGHT + 1 <= Block[j].pos.y + MAP_CHIP_HEIGHT)
-											{
-												if (Map[i].pos.x - 1 >= Block[j].pos.x && Map[i].pos.x - 1 <= Block[j].pos.x + MAP_CHIP_WIDTH)
-												{
-													isGround = true;
-													break;
-												}
-											}
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-				if (!isGround && Map[i].type != SKY_ENEMY)
-				{
-					g_EnemyData[i].dirRight = true;
-				}
-			}
-
 			if (!Map[i].EnemyKill)
 			{
 				if (g_EnemyData[i].dirRight)
 				{
-					Map[i].pos.x += walkSpeed;
+					Map[i].pos.x += g_EnemyData[i].move.x;
 				}
 				if (!g_EnemyData[i].dirRight)
 				{
-					Map[i].pos.x -= walkSpeed;
+					Map[i].pos.x -= g_EnemyData[i].move.x;
+				}
+
+				Map[i].pos.y += g_EnemyData[i].move.y;
+
+				bool groundAhead = false;
+
+				float footY = Map[i].pos.y + MAP_CHIP_HEIGHT + 1;
+				float checkX;
+
+				if (g_EnemyData[i].dirRight)
+					checkX = Map[i].pos.x + MAP_CHIP_WIDTH + 1;
+				else
+					checkX = Map[i].pos.x - 1;
+
+				for (int j = 0; j < BLOCK_MAX; j++)
+				{
+					if (!Block[j].active) continue;
+
+					if (Block[j].type == NORMAL_BLOCK || Block[j].type == ONE_WAY_BLOCK || Block[j].type == DESTROY_BLOCK || Block[j].type == DESTROY_BLOCK_2)
+					{
+						if (CheckSquareSquare(
+							checkX, footY,
+							1, 1,
+							Block[j].pos.x, Block[j].pos.y,
+							MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
+						{
+							groundAhead = true;
+							break;
+						}
+					}
+				}
+				if (!groundAhead)
+				{
+					g_EnemyData[i].dirRight = !g_EnemyData[i].dirRight;
+				}
+			}
+
+
+			for (int j = 0; j < BLOCK_MAX; j++)
+			{
+				if (!Block[j].active) continue;
+
+				if (Block[j].type == NORMAL_BLOCK || Block[j].type == ONE_WAY_BLOCK || Block[j].type == NEEDLE_BLOCK || Block[j].type == DESTROY_BLOCK || Block[j].type == DESTROY_BLOCK_2 || Block[j].type == ENEMY || Block[j].type == FIRE_ENEMY || Block[j].type == SKY_ENEMY)
+				{
+					float prevBottom = g_EnemyData[i].PrevPos.y + MAP_CHIP_HEIGHT;
+					float prevTop = g_EnemyData[i].PrevPos.y;
+					float prevRight = g_EnemyData[i].PrevPos.x + MAP_CHIP_WIDTH - 6;
+					float prevLeft = g_EnemyData[i].PrevPos.x + 3;
+
+					float blockTop = Block[j].pos.y;
+					float blockBottom = Block[j].pos.y + MAP_CHIP_HEIGHT;
+					float blockLeft = Block[j].pos.x;
+					float blockRight = Block[j].pos.x + MAP_CHIP_WIDTH;
+
+					if (!CheckSquareSquare(Map[i].pos.x + 3, Map[i].pos.y, MAP_CHIP_WIDTH - 6, MAP_CHIP_HEIGHT,
+						Block[j].pos.x, Block[j].pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
+					{
+						continue;
+					}
+					// ã‚©‚ç—Ž‚¿‚Ä‚«‚½
+					if (prevBottom <= blockTop)
+					{
+						if (Block[j].type != ENEMY && Block[j].type != FIRE_ENEMY && Block[j].type != SKY_ENEMY)
+						{
+							Map[i].pos.y = blockTop - MAP_CHIP_HEIGHT;
+							g_EnemyData[i].move.y = 0.0f;
+						}
+					}
+					// ¶‚©‚ç‚Ô‚Â‚©‚Á‚½
+					else if (prevRight <= blockLeft)
+					{
+						g_EnemyData[i].dirRight = false;
+					}
+					// ‰E‚©‚ç‚Ô‚Â‚©‚Á‚½
+					else if (prevLeft >= blockRight)
+					{
+						g_EnemyData[i].dirRight = true;
+					}
 				}
 			}
 		}
 	}
-}
 
-void UpdateEnemy()
-{
 	for (int i = 0; i < BLOCK_MAX; i++)
 	{
 		if (Map[i].type == ENEMY)
