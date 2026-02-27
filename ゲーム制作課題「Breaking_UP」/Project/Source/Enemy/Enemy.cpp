@@ -105,6 +105,7 @@ void StepEnemy()
 		if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY)
 		{
 			g_EnemyData[i].PrevPos = Map[i].pos;
+			
 			if (g_EnemyData[i].move.y > ENEMY_GRAVITY_MAX)
 			{
 				g_EnemyData[i].move.y = ENEMY_GRAVITY_MAX;
@@ -135,41 +136,48 @@ void UpdateEnemy()
 					Map[i].pos.x -= g_EnemyData[i].move.x;
 				}
 
-				Map[i].pos.y += g_EnemyData[i].move.y;
-
-				bool groundAhead = false;
-
-				float footY = Map[i].pos.y + MAP_CHIP_HEIGHT + 1;
-				float checkX;
-
-				if (g_EnemyData[i].dirRight)
-					checkX = Map[i].pos.x + MAP_CHIP_WIDTH + 1;
-				else
-					checkX = Map[i].pos.x - 1;
-
-				for (int j = 0; j < BLOCK_MAX; j++)
+				if (Map[i].type != SKY_ENEMY)
 				{
-					if (!Block[j].active) continue;
+					Map[i].pos.y += g_EnemyData[i].move.y;
+				}
+				if (Map[i].type != SKY_ENEMY)
+				{
+					bool groundAhead = false;
 
-					if (Block[j].type == NORMAL_BLOCK || Block[j].type == ONE_WAY_BLOCK || Block[j].type == DESTROY_BLOCK || Block[j].type == DESTROY_BLOCK_2)
+					float footY = Map[i].pos.y + MAP_CHIP_HEIGHT + 1;
+					float checkX;
+
+					if (g_EnemyData[i].dirRight)
 					{
-						if (CheckSquareSquare(
-							checkX, footY,
-							1, 1,
-							Block[j].pos.x, Block[j].pos.y,
-							MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
+						checkX = Map[i].pos.x + MAP_CHIP_WIDTH + 1;
+					}
+					else
+					{
+						checkX = Map[i].pos.x - 1;
+					}
+					for (int j = 0; j < BLOCK_MAX; j++)
+					{
+						if (!Block[j].active) continue;
+
+						if (Block[j].type == NORMAL_BLOCK || Block[j].type == ONE_WAY_BLOCK || Block[j].type == DESTROY_BLOCK || Block[j].type == DESTROY_BLOCK_2)
 						{
-							groundAhead = true;
-							break;
+							if (CheckSquareSquare(
+								checkX, footY,
+								1, 1,
+								Block[j].pos.x, Block[j].pos.y,
+								MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
+							{
+								groundAhead = true;
+								break;
+							}
 						}
 					}
-				}
-				if (!groundAhead)
-				{
-					g_EnemyData[i].dirRight = !g_EnemyData[i].dirRight;
+					if (!groundAhead)
+					{
+						g_EnemyData[i].dirRight = !g_EnemyData[i].dirRight;
+					}
 				}
 			}
-
 
 			for (int j = 0; j < BLOCK_MAX; j++)
 			{
@@ -179,15 +187,15 @@ void UpdateEnemy()
 				{
 					float prevBottom = g_EnemyData[i].PrevPos.y + MAP_CHIP_HEIGHT;
 					float prevTop = g_EnemyData[i].PrevPos.y;
-					float prevRight = g_EnemyData[i].PrevPos.x + MAP_CHIP_WIDTH - 6;
-					float prevLeft = g_EnemyData[i].PrevPos.x + 3;
+					float prevRight = g_EnemyData[i].PrevPos.x + MAP_CHIP_WIDTH;
+					float prevLeft = g_EnemyData[i].PrevPos.x;
 
 					float blockTop = Block[j].pos.y;
 					float blockBottom = Block[j].pos.y + MAP_CHIP_HEIGHT;
 					float blockLeft = Block[j].pos.x;
 					float blockRight = Block[j].pos.x + MAP_CHIP_WIDTH;
 
-					if (!CheckSquareSquare(Map[i].pos.x + 3, Map[i].pos.y, MAP_CHIP_WIDTH - 6, MAP_CHIP_HEIGHT,
+					if (!CheckSquareSquare(Map[i].pos.x, Map[i].pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT,
 						Block[j].pos.x, Block[j].pos.y, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
 					{
 						continue;
@@ -202,12 +210,12 @@ void UpdateEnemy()
 						}
 					}
 					// ¶‚©‚ç‚Ô‚Â‚©‚Á‚½
-					else if (prevRight <= blockLeft)
+					else if (prevRight <= blockLeft && Block[j].type != ONE_WAY_BLOCK)
 					{
 						g_EnemyData[i].dirRight = false;
 					}
 					// ‰E‚©‚ç‚Ô‚Â‚©‚Á‚½
-					else if (prevLeft >= blockRight)
+					else if (prevLeft >= blockRight && Block[j].type != ONE_WAY_BLOCK)
 					{
 						g_EnemyData[i].dirRight = true;
 					}
