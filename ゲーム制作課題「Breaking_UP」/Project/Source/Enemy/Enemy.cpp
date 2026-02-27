@@ -105,7 +105,7 @@ void StepEnemy()
 		if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY)
 		{
 			g_EnemyData[i].PrevPos = Map[i].pos;
-			
+
 			if (g_EnemyData[i].move.y > ENEMY_GRAVITY_MAX)
 			{
 				g_EnemyData[i].move.y = ENEMY_GRAVITY_MAX;
@@ -200,6 +200,7 @@ void UpdateEnemy()
 					{
 						continue;
 					}
+
 					// ã‚©‚ç—‚¿‚Ä‚«‚½
 					if (prevBottom <= blockTop)
 					{
