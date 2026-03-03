@@ -33,7 +33,7 @@ void InitTitleScene()
 void LoadTitleScene()
 {
 	g_BGHandle = LoadGraph("Data/Logo/TitleLogo.png");
-	g_PressSpaceKeyHandle = LoadGraph("Data/Logo/PressSpaceKye.png");
+	g_PressSpaceKeyHandle = LoadGraph("Data/Logo/PressSpaceKey.png");
 }
 
 void StartTitleScene()
@@ -75,7 +75,7 @@ void DrawTitleScene()
 	// 点滅のためにブレンドモードを設定する(DXLibの仕様が0～255で指定するので加工する)
 	SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)(g_PressSpaceKeyAlpha * 255));
 
-	// Press Z Key 描画
+	// Press Space Key 描画
 	DrawGraph(0, 0, g_PressSpaceKeyHandle, TRUE);
 
 	// ブレンドモードを戻す
