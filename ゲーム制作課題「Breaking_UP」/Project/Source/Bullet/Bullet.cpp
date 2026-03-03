@@ -339,14 +339,14 @@ void UpdateBullet()
 				{
 					Map[j].handle = BlockHandle11;
 					Map[j].BreakFlg = -2;
-					int r = rand() % 50;  
+					int r = rand() % 100;  
 
-					if (r == 0)
+					if (r == 0 || r == 20 || r == 40 || r == 60 || r == 80)
 					{
 						Map[j].type = ENEMY;
 						r = 50;
 					}
-					else if (r == 1)
+					else if (r == 50)
 					{
 						Map[j].type = FIRE_ENEMY;
 						r = 50;
@@ -366,7 +366,18 @@ void UpdateBullet()
 
 					enemy[j].PrevPos = Map[j].pos;
 					enemy[j].move.y = 0.0f;
-					enemy[j].dirRight = false;
+					if (Map[j + 1].type == NORMAL_BLOCK || Map[j + 1].type == NEEDLE_BLOCK || Map[j + 1].type == DESTROY_BLOCK || Map[j + 1].type == DESTROY_BLOCK_2 || Map[j + 1].type == ENEMY || Map[j + 1].type == FIRE_ENEMY || Map[j + 1].type == SKY_ENEMY)
+					{
+						enemy[j].dirRight = false;
+					}
+					if (Map[j - 1].type == NORMAL_BLOCK || Map[j - 1].type == NEEDLE_BLOCK || Map[j - 1].type == DESTROY_BLOCK || Map[j - 1].type == DESTROY_BLOCK_2 || Map[j - 1].type == ENEMY || Map[j - 1].type == FIRE_ENEMY || Map[j - 1].type == SKY_ENEMY)
+					{
+						enemy[j].dirRight = true;
+					}
+					else
+					{
+						enemy[j].dirRight = false;
+					}
 					Map[j].EnemyKill = false;
 				}
 			}
