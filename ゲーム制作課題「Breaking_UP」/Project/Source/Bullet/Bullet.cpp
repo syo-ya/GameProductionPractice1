@@ -148,7 +148,7 @@ void UpdateBullet()
 			{
 				g_BulletData[i].LifeTime += 1.00f / 60.00f;
 			}
-			if (g_BulletData[i].LifeTime >= 3.0f)
+			if (g_BulletData[i].LifeTime >= 2.0f)
 			{
 				g_BulletData[i].active = false;
 			}
