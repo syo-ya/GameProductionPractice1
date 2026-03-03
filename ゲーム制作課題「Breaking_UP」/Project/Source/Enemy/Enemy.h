@@ -17,3 +17,5 @@ struct EnemyData
 	VECTOR PrevPos;
 	bool isGround;
 };
+
+EnemyData* GetEnemy();

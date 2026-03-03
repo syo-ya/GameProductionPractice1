@@ -338,9 +338,36 @@ void UpdateBullet()
 				else if (Map[j].EffectTime > 0.20f)
 				{
 					Map[j].handle = BlockHandle11;
+					Map[j].BreakFlg = -2;
+					int r = rand() % 50;  
+
+					if (r == 0)
+					{
+						Map[j].type = ENEMY;
+						r = 50;
+					}
+					else if (r == 1)
+					{
+						Map[j].type = FIRE_ENEMY;
+						r = 50;
+					}
+					else
+					{
+						Map[j].active = false;
+						Map[j].type = MAP_CHIP_NONE;
+					}
+
+					Map[j].pos.x = Map[j].ChipX * MAP_CHIP_WIDTH;
+					Map[j].pos.y = Map[j].ChipY * MAP_CHIP_HEIGHT;
+					
 					Map[j].EffectTime = 0.0f;
-					Map[j].BreakFlg = -1;
-					Map[j].active = false;
+
+					EnemyData* enemy = GetEnemy();
+
+					enemy[j].PrevPos = Map[j].pos;
+					enemy[j].move.y = 0.0f;
+					enemy[j].dirRight = false;
+					Map[j].EnemyKill = false;
 				}
 			}
 		}

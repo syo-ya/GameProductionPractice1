@@ -8,6 +8,7 @@
 #include "../Scene/SceneManager.h"
 #include "../GameSetting/GameSetting.h"
 #include "../Sound/Sound.h"
+#include <math.h>
 
 bool EnemyWalk = true;
 
@@ -395,7 +396,6 @@ void UpdateEnemy()
 	}
 }
 
-
 void EnemyKill(int i)
 {
 	if (!Map[i].EnemyKill)
@@ -417,4 +417,9 @@ void ResetEnemy()
 			g_EnemyData[i].dirRight = false;
 		}
 	}
+}
+
+EnemyData* GetEnemy()
+{
+	return g_EnemyData;
 }
