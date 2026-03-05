@@ -39,6 +39,8 @@ int GetCoinhandle2 = NULL;
 int GetCoinhandle3 = NULL;
 int GetCoinhandle4 = NULL;
 
+int g_CoinUIHandle = 0;
+
 struct PlayerAnimationParam
 {
 	int interval;
@@ -78,6 +80,8 @@ void InitPlayer()
 	{
 		InitAnimation(&g_PlayerData.animation[i]);
 	}
+
+	g_CoinUIHandle = 0;
 }
 
 void LoadPlayer()
@@ -93,6 +97,8 @@ void LoadPlayer()
 	GetCoinhandle2 = LoadGraph("Data/Map/Coin/GetCoin2.png");
 	GetCoinhandle3 = LoadGraph("Data/Map/Coin/GetCoin3.png");
 	GetCoinhandle4 = LoadGraph("Data/Map/Coin/GetCoin4.png");
+
+	g_CoinUIHandle = LoadGraph("Data/Map/CoinUI.png");
 
 }
 
@@ -454,7 +460,10 @@ void DrawPlayer()
 	DrawAnimation(animData, g_PlayerData.pos.x - camera.pos.x, g_PlayerData.pos.y - camera.pos.y, g_PlayerData.isTurn);
 
 	DrawGraph((int)g_PlayerData.pos.x - camera.pos.x, (int)g_PlayerData.pos.y - camera.pos.y, g_PlayerData.handle, TRUE);
-	DrawFormatString(0, 0, GetColor(0, 0, 0), "älìæÉRÉCÉìÅF%d / %d", GetCoin, CLEAR_COIN_NUM);
+
+	DrawGraph(0, 0, g_CoinUIHandle, TRUE);
+
+	DrawFormatString(68, 16, GetColor(0, 0, 0), "%d / %d", GetCoin, CLEAR_COIN_NUM);
 }
 
 void FinPlayer()
@@ -463,6 +472,8 @@ void FinPlayer()
 	{
 		DeleteGraph(g_PlayerData.animation[i].handle);
 	}
+
+	DeleteGraph(g_CoinUIHandle);
 }
 
 PlayerData GetPlayer()
