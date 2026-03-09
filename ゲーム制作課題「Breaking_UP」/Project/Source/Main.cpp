@@ -26,6 +26,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 	SetFontSize(20);
 
+	LoadBGM();
+	LoadSE();
+
 	InitFPS();
 
 	InitInput();
@@ -50,6 +53,9 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, 
 
 		ScreenFlip();
 	}
+
+	FinBGM();
+	FinSE();
 
 	FinInput();
 

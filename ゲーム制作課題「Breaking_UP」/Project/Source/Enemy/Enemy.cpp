@@ -150,11 +150,11 @@ void UpdateEnemy()
 
 					if (g_EnemyData[i].dirRight)
 					{
-						checkX = Map[i].pos.x + MAP_CHIP_WIDTH + 1;
+						checkX = Map[i].pos.x + MAP_CHIP_WIDTH;
 					}
 					else
 					{
-						checkX = Map[i].pos.x - 1;
+						checkX = Map[i].pos.x;
 					}
 					for (int j = 0; j < BLOCK_MAX; j++)
 					{
@@ -401,7 +401,7 @@ void EnemyKill(int i)
 	if (!Map[i].EnemyKill)
 	{
 		Map[i].EnemyKill = true;
-		//PlaySE(SE_ENEMY_KILL);
+		PlaySE(SE_ENEMY_KILL);
 		Map[i].EffectTime = 0.0f;
 	}
 }

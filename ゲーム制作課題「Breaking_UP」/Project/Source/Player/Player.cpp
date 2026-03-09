@@ -200,7 +200,7 @@ void StepPlayer()
 
 			if (SECooltime)
 			{
-				//PlaySE(SE_JUMP);
+				PlaySE(SE_JUMP);
 			}
 			SECooltime = false;
 		}
@@ -326,7 +326,7 @@ void UpdatePlayer()
 				}
 				if (Map[i].type == COIN && Map[i].active)
 				{
-					//PlaySE(SE_COIN);
+					PlaySE(SE_COIN);
 					GetCoin++;
 					Map[i].coinEffect = true;
 				}
@@ -356,7 +356,7 @@ void UpdatePlayer()
 			{
 				if (Map[i].type == COIN && Map[i].active)
 				{
-					//PlaySE(SE_COIN);
+					PlaySE(SE_COIN);
 					GetCoin++;
 					Map[i].coinEffect = true;
 				}
@@ -386,7 +386,7 @@ void UpdatePlayer()
 			{
 				if (Map[i].type == COIN && Map[i].active)
 				{
-					//PlaySE(SE_COIN);
+					PlaySE(SE_COIN);
 					GetCoin++;
 					Map[i].coinEffect = true;
 				}
@@ -416,7 +416,7 @@ void UpdatePlayer()
 			{
 				if (Map[i].type == COIN && Map[i].active)
 				{
-					//PlaySE(SE_COIN);
+					PlaySE(SE_COIN);
 					GetCoin++;
 					Map[i].coinEffect = true;
 				}
@@ -535,7 +535,7 @@ void GameClearPlayer()
 {
 	if (!gameSceneChangeSE)
 	{
-		//PlaySE(SE_CLEAR);
+		PlaySE(SE_CLEAR);
 		g_PlayerData.move.x = 0.0f;
 		g_PlayerData.move.y = 0.0f;
 		gameSceneChangeSE = true;
@@ -551,7 +551,7 @@ void GameOverPlayer()
 {
 	if (!gameSceneChangeSE)
 	{
-		//PlaySE(SE_GAME_OVER);
+		PlaySE(SE_GAME_OVER);
 		g_PlayerData.move.x = 0.0f;
 		g_PlayerData.move.y = -0.00001f;
 		gameSceneChangeSE = true;

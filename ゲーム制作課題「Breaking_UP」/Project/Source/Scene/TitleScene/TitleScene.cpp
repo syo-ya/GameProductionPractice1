@@ -2,6 +2,7 @@
 #include "TitleScene.h"
 #include "../SceneManager.h"
 #include "../../Input/Input.h"
+#include "../../Sound/Sound.h"
 #include <math.h>
 
 #define BACK_GROUND_SPEED (-0.3f)
@@ -28,6 +29,7 @@ void InitTitleScene()
 	g_PressSpaceKeyHandle = 0;
 	g_PressSpaceKeyAlpha = 0.0f;
 	g_PressSpaceKeyRadian = 0.0f;
+	PlayBGM(BGM_TITLE);
 }
 
 void LoadTitleScene()
@@ -60,6 +62,8 @@ void StepTitleScene()
 	if (IsTriggerKey(KEY_SPACE))
 	{
 		ChangeScene(SCENE_PLAY);
+		PlaySE(SE_ENTER);
+		StopBGM(BGM_TITLE);
 	}
 }
 

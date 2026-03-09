@@ -6,6 +6,7 @@
 #include "../../Collision/Collision.h"
 #include "../../Map/MapManager.h"
 #include "../../Camera/Camera.h"
+#include "../../Sound/Sound.h"
 
 // 背景のスピード
 #define BACK_GROUND_SPEED (-1.5f)
@@ -18,6 +19,7 @@ void InitPlayScene()
 	InitCamera();
 	InitBullet();
 	InitEnemy();
+	PlayBGM(BGM_PLAY_SCENE);
 }
 
 void LoadPlayScene()

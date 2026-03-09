@@ -214,7 +214,6 @@ void UpdateBullet()
 				{
 					continue;
 				}
-
 				if (Map[j].type == NORMAL_BLOCK || Map[j].type == NEEDLE_BLOCK)
 				{
 					g_BulletData[i].Hit = true;
@@ -229,11 +228,13 @@ void UpdateBullet()
 				}
 				if (Map[j].type == DESTROY_BLOCK || Map[j].type == DESTROY_BLOCK_2)
 				{
+					
 					if (Map[j].BreakFlg == -1)
 					{
 						Map[j].BreakFlg = 0;
 						Map[j].EffectTime = 0.0f;
 						g_BulletData[i].Hit = true;
+						PlaySE(SE_HIT);
 					}
 					else if (Map[j].BreakFlg == 1 || Map[j].BreakFlg == 0)
 					{
@@ -318,6 +319,11 @@ void UpdateBullet()
 				if (Map[j].EffectTime >= 0.0f && Map[j].EffectTime < 0.04f)
 				{
 					Map[j].handle = BlockHandle6;
+					
+					if (Map[j].EffectTime >= 0.0f && Map[j].EffectTime <= 1 / rFPS())
+					{
+						PlaySE(SE_DESTROY);
+					}
 				}
 				else if (Map[j].EffectTime >= 0.04f && Map[j].EffectTime < 0.08f)
 				{
@@ -366,11 +372,11 @@ void UpdateBullet()
 
 					enemy[j].PrevPos = Map[j].pos;
 					enemy[j].move.y = 0.0f;
-					if (Map[j + 1].type == NORMAL_BLOCK || Map[j + 1].type == NEEDLE_BLOCK || Map[j + 1].type == DESTROY_BLOCK || Map[j + 1].type == DESTROY_BLOCK_2 || Map[j + 1].type == ENEMY || Map[j + 1].type == FIRE_ENEMY || Map[j + 1].type == SKY_ENEMY)
+					if (Map[j + 1].type == NORMAL_BLOCK || Map[j + 1].type == NEEDLE_BLOCK || Map[j + 1].type == DESTROY_BLOCK || Map[j + 1].type == DESTROY_BLOCK_2)
 					{
 						enemy[j].dirRight = false;
 					}
-					if (Map[j - 1].type == NORMAL_BLOCK || Map[j - 1].type == NEEDLE_BLOCK || Map[j - 1].type == DESTROY_BLOCK || Map[j - 1].type == DESTROY_BLOCK_2 || Map[j - 1].type == ENEMY || Map[j - 1].type == FIRE_ENEMY || Map[j - 1].type == SKY_ENEMY)
+					if (Map[j - 1].type == NORMAL_BLOCK || Map[j - 1].type == NEEDLE_BLOCK || Map[j - 1].type == DESTROY_BLOCK || Map[j - 1].type == DESTROY_BLOCK_2)
 					{
 						enemy[j].dirRight = true;
 					}
@@ -509,7 +515,7 @@ void FireBullet(float posX, float posY)
 		BULLET_TRUE_NUM++;
 		BULLET_COOLTIME = BULLET_COOLTIME_MAX;
 
-		//PlaySE(SE_SHOT);
+		PlaySE(SE_BULLET);
 	}
 
 	if (BULLET_TRUE_NUM >= BULLET_NUM)
