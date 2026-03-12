@@ -21,7 +21,16 @@ enum InputKey
     KEY_RIGHT = 1 << 11,
     KEY_LEFT = 1 << 12,
     KEY_L = 1 << 13,
-    KEY_R = 1 << 14
+    KEY_R = 1 << 14,
+    KEY_Z2 = 1 << 15,
+    KEY_SPACE2 = 1 << 16,
+    KEY_X2 = 1 << 17,
+    KEY_P2 = 1 << 18,
+    KEY_O2 = 1 << 19,
+    KEY_UP2 = 1 << 20,
+    KEY_DOWN2 = 1 << 21,
+    KEY_RIGHT2 = 1 << 22,
+    KEY_LEFT2 = 1 << 23
 };
 
 bool IsInputKey(InputKey key);

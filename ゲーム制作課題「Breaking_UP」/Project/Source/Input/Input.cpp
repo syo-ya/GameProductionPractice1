@@ -78,9 +78,47 @@ void UpdateInput()
 		g_InputState |= KEY_R;
 	}
 	
+
+	if ((GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_A) != 0)
+	{
+		g_InputState |= KEY_Z2;
+	}
+	if ((GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_B) != 0)
+	{
+		g_InputState |= KEY_SPACE2;
+	}
+	if ((GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_3) != 0)
+	{
+		g_InputState |= KEY_X2;
+	}
+	if ((GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_7) != 0)
+	{
+		g_InputState |= KEY_P2;
+	}
+	if ((GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_8) != 0)
+	{
+		g_InputState |= KEY_O2;
+	}
+	if ((GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_UP) != 0)
+	{
+		g_InputState |= KEY_UP2;
+	}
+	if ((GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_DOWN) != 0)
+	{
+		g_InputState |= KEY_DOWN2;
+	}
+	if ((GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_RIGHT) != 0)
+	{
+		g_InputState |= KEY_RIGHT2;
+	}
+	if ((GetJoypadInputState(DX_INPUT_PAD2) & PAD_INPUT_LEFT) != 0)
+	{
+		g_InputState |= KEY_LEFT2;
+	}
 }
 void DrawInput()
 {
+
 }
 void FinInput()
 {
