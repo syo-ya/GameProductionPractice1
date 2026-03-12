@@ -10,10 +10,10 @@
 
 // 背景のスピード
 #define BACK_GROUND_SPEED (-1.5f)
-int PlayBG = NULL;
+int g_PlayBG = NULL;
 void InitPlayScene()
 {
-	PlayBG = LoadGraph("Data/BackGround/PlayBG.png");
+	g_PlayBG = LoadGraph("Data/Logo/Sky.jpg");
 	InitMap();
 	InitPlayer();
 	InitCamera();
@@ -52,7 +52,7 @@ void UpdatePlayScene()
 
 void DrawPlayScene()
 {
-	DrawGraph(0, 0, PlayBG, TRUE);
+	DrawGraph(0, 0, g_PlayBG, TRUE);
 	DrawCamera();
 	DrawMap();
 	DrawPlayer();
