@@ -15,6 +15,8 @@
 
 #define PRESS_SPACE_KEY_BLINK_SPEED (0.04f)
 
+
+int g_TitleBG = 0;
 int g_BGHandle = 0;
 int g_TitleHandle = 0;
 int g_PressSpaceKeyHandle = 0;
@@ -24,6 +26,7 @@ float g_PressSpaceKeyRadian = 0.0f;
 
 void InitTitleScene()
 {
+	g_TitleBG = 0;
 	g_BGHandle = 0;
 	g_TitleHandle = 0;
 	g_PressSpaceKeyHandle = 0;
@@ -34,6 +37,7 @@ void InitTitleScene()
 
 void LoadTitleScene()
 {
+	g_TitleBG = LoadGraph("Data/Logo/Sky.jpg");
 	g_BGHandle = LoadGraph("Data/Logo/TitleLogo.png");
 	g_PressSpaceKeyHandle = LoadGraph("Data/Logo/PressSpaceKey.png");
 }
@@ -74,6 +78,7 @@ void UpdateTitleScene()
 
 void DrawTitleScene()
 {
+	DrawGraph(0, 0, g_TitleBG, TRUE);
 	DrawGraph(0, 0, g_BGHandle, TRUE);
 
 	// 点滅のためにブレンドモードを設定する(DXLibの仕様が0～255で指定するので加工する)
@@ -88,6 +93,7 @@ void DrawTitleScene()
 
 void FinTitleScene()
 {
+	DeleteGraph(g_TitleBG);
 	DeleteGraph(g_TitleHandle);
 	DeleteGraph(g_PressSpaceKeyHandle);
 }

@@ -4,10 +4,12 @@
 #include "../../Scene/SceneManager.h"
 #include "../../Sound/Sound.h"
 
+int g_GameOverBG = 0;
 int g_GameOverHandle = 0;
 
 void InitGameOverScene()
 {
+	int g_BackGround = 0;
 	int g_GameOverHandle = 0;
 	StopBGM(BGM_PLAY_SCENE);
 	PlayBGM(BGM_GAME_OVER);
@@ -15,6 +17,7 @@ void InitGameOverScene()
 
 void LoadGameOverScene()
 {
+	g_GameOverBG = LoadGraph("Data/Logo/Sky.jpg");
 	g_GameOverHandle = LoadGraph("Data/Logo/GameOver.png");
 }
 
@@ -41,10 +44,12 @@ void UpdateGameOverScene()
 
 void DrawGameOverScene()
 {
+	DrawGraph(0, 0, g_GameOverBG, TRUE);
 	DrawGraph(0, 0, g_GameOverHandle, TRUE);
 }
 
 void FinGameOverScene()
 {
+	DeleteGraph(g_GameOverBG);
 	DeleteGraph(g_GameOverHandle);
 }
