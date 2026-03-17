@@ -447,9 +447,9 @@ void DrawPlayer()
 	DrawAnimation(animData, g_PlayerData.pos.x - camera.pos.x, g_PlayerData.pos.y - camera.pos.y, g_PlayerData.isTurn);
 	DrawGraph((int)g_PlayerData.pos.x - camera.pos.x, (int)g_PlayerData.pos.y - camera.pos.y, g_PlayerData.handle, TRUE);
 
-	DrawGraph(0, 0, g_CoinUIHandle, TRUE);
+	DrawGraph(10,10, g_CoinUIHandle, TRUE);
 
-	DrawFormatString(68, 16, GetColor(0, 0, 0), "%d / %d", GetCoin, CLEAR_COIN_NUM);
+	DrawFormatString(80, 26, GetColor(0, 0, 0), "%d / %d", GetCoin, CLEAR_COIN_NUM);
 }
 
 void FinPlayer()
