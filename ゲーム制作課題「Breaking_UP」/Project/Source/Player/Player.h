@@ -42,6 +42,10 @@ struct PlayerData
 	bool isTurn;
 	bool isAir;
 	bool jumpPow;
+	bool JumpInput;
+	bool MoveNow;
+	bool SECooltime;
+	int life;
 	bool enemyHit;
 	AnimationData animation[PLAYER_ANIM_MAX];
 	PlayerAnimationType playAnim;

@@ -119,6 +119,7 @@ void StepEnemy()
 
 void UpdateEnemy()
 {
+	MapData* Map = GetMaps();
 	MapData* Block = GetMaps();
 	for (int i = 0; i < BLOCK_MAX; i++)
 	{
@@ -126,6 +127,17 @@ void UpdateEnemy()
 
 		if (Map[i].type == ENEMY || Map[i].type == FIRE_ENEMY || Map[i].type == SKY_ENEMY)
 		{
+			if (Map[i + 1].type == NORMAL_BLOCK || Map[i + 1].type == NEEDLE_BLOCK || Map[i + 1].type == DESTROY_BLOCK || Map[i + 1].type == DESTROY_BLOCK_2)
+			{
+				if (Map[i - 1].type == NORMAL_BLOCK || Map[i - 1].type == NEEDLE_BLOCK || Map[i - 1].type == DESTROY_BLOCK || Map[i - 1].type == DESTROY_BLOCK_2)
+				{
+					if (Map[i].ChipX - Map[i - 1].ChipX == 1 && Map[i + 1].ChipX - Map[i].ChipX == 1)
+					{
+						Map[i].active = false;
+						Map[i].type = MAP_CHIP_NONE;
+					}
+				}
+			}
 			if (!Map[i].EnemyKill)
 			{
 				if (g_EnemyData[i].dirRight)
@@ -150,17 +162,17 @@ void UpdateEnemy()
 
 					if (g_EnemyData[i].dirRight)
 					{
-						checkX = Map[i].pos.x + MAP_CHIP_WIDTH;
+						checkX = Map[i].pos.x + MAP_CHIP_WIDTH - 5;
 					}
 					else
 					{
-						checkX = Map[i].pos.x;
+						checkX = Map[i].pos.x + 2;
 					}
 					for (int j = 0; j < BLOCK_MAX; j++)
 					{
 						if (!Block[j].active) continue;
 
-						if (Block[j].type == NORMAL_BLOCK || Block[j].type == ONE_WAY_BLOCK || Block[j].type == DESTROY_BLOCK || Block[j].type == DESTROY_BLOCK_2)
+						if (Block[j].type == NORMAL_BLOCK || Block[j].type == ONE_WAY_BLOCK || Block[j].type == DESTROY_BLOCK || Block[j].type == DESTROY_BLOCK_2 || Block[j].type == NEEDLE_BLOCK)
 						{
 							if (CheckSquareSquare(
 								checkX, footY,
@@ -188,8 +200,8 @@ void UpdateEnemy()
 				{
 					float prevBottom = g_EnemyData[i].PrevPos.y + MAP_CHIP_HEIGHT;
 					float prevTop = g_EnemyData[i].PrevPos.y;
-					float prevRight = g_EnemyData[i].PrevPos.x + MAP_CHIP_WIDTH;
-					float prevLeft = g_EnemyData[i].PrevPos.x;
+					float prevRight = g_EnemyData[i].PrevPos.x + MAP_CHIP_WIDTH - 2;
+					float prevLeft = g_EnemyData[i].PrevPos.x + 2;
 
 					float blockTop = Block[j].pos.y;
 					float blockBottom = Block[j].pos.y + MAP_CHIP_HEIGHT;
@@ -202,6 +214,10 @@ void UpdateEnemy()
 						continue;
 					}
 
+					if (Block[j].type == ENEMY || Block[j].type == FIRE_ENEMY || Block[j].type == SKY_ENEMY)
+					{
+						g_EnemyData[i].move.x = 0;
+					}
 					// ã‚©‚ç—Ž‚¿‚Ä‚«‚½
 					if (prevBottom <= blockTop)
 					{
@@ -209,6 +225,7 @@ void UpdateEnemy()
 						{
 							Map[i].pos.y = blockTop - MAP_CHIP_HEIGHT;
 							g_EnemyData[i].move.y = 0.0f;
+							g_EnemyData[i].move.x = ENEMY_MOVE_SPEED;
 						}
 					}
 					// ¶‚©‚ç‚Ô‚Â‚©‚Á‚½
@@ -220,6 +237,11 @@ void UpdateEnemy()
 					else if (prevLeft >= blockRight && Block[j].type != ONE_WAY_BLOCK)
 					{
 						g_EnemyData[i].dirRight = true;
+					}
+					else
+					{
+						g_EnemyData[i].move.x = 0;
+
 					}
 				}
 			}

@@ -19,16 +19,10 @@ int GetCoin = 0;
 
 float effectTime = 0.0f;
 
-bool SECooltime = true;
-
-bool JumpInput = true;
-
 bool gameOver = false;
 bool gameClear = false;
 int StopCount = 0;
 bool gameSceneChangeSE = false;
-
-bool MoveNow = false;
 
 float PLAYER_MOVE_MAX = 6.5;
 float PLAYER_JUMP_MAX = 12.0;
@@ -65,7 +59,6 @@ void InitPlayer()
 	GetCoin = 0;
 	gameOver = false;
 	gameClear = false;
-	SECooltime = true;
 	StopCount = 0;
 	gameSceneChangeSE = false;
 	
@@ -75,6 +68,9 @@ void InitPlayer()
 	g_PlayerData.move.y = 0.0f;
 	g_PlayerData.playAnim = PLAYER_ANIM_NONE;
 	g_PlayerData.isTurn = false;
+	g_PlayerData.JumpInput = true;
+	g_PlayerData.MoveNow = false;
+	g_PlayerData.SECooltime = true;
 
 	for (int i = 0; i < PLAYER_ANIM_MAX; i++)
 	{
@@ -112,7 +108,7 @@ void StepPlayer()
 	if (!gameOver && !gameClear)
 	{
 		g_PrevPlayerData = g_PlayerData;
-
+		
 		if (IsInputKey(KEY_X))
 		{
 			PLAYER_MOVE_MAX = 6.5f;
@@ -120,23 +116,13 @@ void StepPlayer()
 
 		}
 		
-		/*å„Ç©ÇÁè¡Ç∑*/
-		else if (IsInputKey(KEY_R))
-		{
-			PLAYER_MOVE_MAX = 10.0f;
-			PLAYER_JUMP_MAX = 20.0f;
-
-		}
-
 		else
 		{
 			PLAYER_MOVE_MAX = 3.5f;
 			PLAYER_JUMP_MAX = 10.0f;
 		}
 
-		if (g_PlayerData.move.x)
-
-			if (g_PlayerData.move.x > PLAYER_MOVE_MAX)
+		if (g_PlayerData.move.x > PLAYER_MOVE_MAX)
 			{
 				g_PlayerData.move.x = PLAYER_MOVE_MAX;
 			}
@@ -152,25 +138,25 @@ void StepPlayer()
 		{
 			g_PlayerData.move.x += -PLAYER_MOVE_POWER;
 			g_PlayerData.isTurn = true;
-			MoveNow = true;
+			g_PlayerData.MoveNow = true;
 		}
 		else if (IsInputKey(KEY_RIGHT) && !g_PlayerData.isAir)
 		{
 			g_PlayerData.move.x += PLAYER_MOVE_POWER;
 			g_PlayerData.isTurn = false;
-			MoveNow = true;
+			g_PlayerData.MoveNow = true;
 		}
 		else if (IsInputKey(KEY_LEFT) && g_PlayerData.isAir)
 		{
 			g_PlayerData.move.x += -PLAYER_MOVE_POWER;
 			g_PlayerData.isTurn = true;
-			MoveNow = true;
+			g_PlayerData.MoveNow = true;
 		}
 		else if (IsInputKey(KEY_RIGHT) && g_PlayerData.isAir)
 		{
 			g_PlayerData.move.x += PLAYER_MOVE_POWER;
 			g_PlayerData.isTurn = false;
-			MoveNow = true;
+			g_PlayerData.MoveNow = true;
 		}
 		else
 		{
@@ -182,7 +168,7 @@ void StepPlayer()
 			{
 				g_PlayerData.move.x -= PLAYER_MOVE_POWER;
 			}
-			MoveNow = false;
+			g_PlayerData.MoveNow = false;
 		}
 
 		if (IsTriggerKey(KEY_SPACE))
@@ -190,19 +176,19 @@ void StepPlayer()
 			FireBullet(g_PlayerData.pos.x, g_PlayerData.pos.y);
 		}
 
-		if (IsTriggerKey(KEY_Z) && !g_PrevPlayerData.jumpPow && !JumpInput)
+		if (IsTriggerKey(KEY_Z) && !g_PrevPlayerData.jumpPow && !g_PlayerData.JumpInput)
 		{
-			JumpInput = true;
+			g_PlayerData.JumpInput = true;
 		}
-		if (IsInputKey(KEY_Z) && !g_PlayerData.jumpPow && JumpInput)
+		if (IsInputKey(KEY_Z) && !g_PlayerData.jumpPow && g_PlayerData.JumpInput)
 		{
 			g_PlayerData.move.y += -PLAYER_JUMP_POWER;
 
-			if (SECooltime)
+			if (g_PlayerData.SECooltime)
 			{
 				PlaySE(SE_JUMP);
 			}
-			SECooltime = false;
+			g_PlayerData.SECooltime = false;
 		}
 		g_PlayerData.move.y += PLAYER_GRAVITY;
 	}
@@ -295,7 +281,7 @@ void UpdatePlayer()
 
 
 
-		if (!GamePlayBool() && /*å„Ç©ÇÁè¡Ç∑*/!IsInputKey(KEY_L))
+		if (!GamePlayBool())
 		{
 			if (!CheckSquareSquare(playerHitX, playerHitY, playerHitW, playerHitH,
 				Map[i].pos.x, blockDrawY, MAP_CHIP_WIDTH, MAP_CHIP_HEIGHT))
@@ -317,10 +303,10 @@ void UpdatePlayer()
 						g_PlayerData.move.y = 0.0f;
 						g_PlayerData.isAir = false;
 						g_PlayerData.jumpPow = false;
-						SECooltime = true;
-						if (JumpInput && Map[i].type != ENEMY && Map[i].type != SKY_ENEMY)
+						g_PlayerData.SECooltime = true;
+						if (g_PlayerData.JumpInput && Map[i].type != ENEMY && Map[i].type != SKY_ENEMY)
 						{
-							JumpInput = false;
+							g_PlayerData.JumpInput = false;
 						}
 					}
 				}
@@ -332,7 +318,7 @@ void UpdatePlayer()
 				}
 				if (Map[i].type == ENEMY || Map[i].type == SKY_ENEMY)
 				{
-					JumpInput = true;
+					g_PlayerData.JumpInput = true;
 					EnemyKill(i);
 				}
 				if (Map[i].type == NEEDLE_BLOCK)
@@ -448,6 +434,7 @@ void UpdatePlayer()
 			}
 		}
 	}
+
 	UpdatePlayerAnimation();
 }
 
@@ -458,7 +445,6 @@ void DrawPlayer()
 	PlayerAnimationType animType = g_PlayerData.playAnim;
 	AnimationData* animData = &g_PlayerData.animation[animType];
 	DrawAnimation(animData, g_PlayerData.pos.x - camera.pos.x, g_PlayerData.pos.y - camera.pos.y, g_PlayerData.isTurn);
-
 	DrawGraph((int)g_PlayerData.pos.x - camera.pos.x, (int)g_PlayerData.pos.y - camera.pos.y, g_PlayerData.handle, TRUE);
 
 	DrawGraph(0, 0, g_CoinUIHandle, TRUE);
@@ -499,7 +485,7 @@ void UpdatePlayerAnimation()
 	{
 		if (!g_PlayerData.isAir)
 		{
-			if (g_PlayerData.move.x < 0.0f || g_PlayerData.move.x > 0.0f || MoveNow)
+			if (g_PlayerData.move.x < 0.0f || g_PlayerData.move.x > 0.0f || g_PlayerData.MoveNow)
 			{
 				StartPlayerAnimation(PLAYER_ANIM_RUN);
 			}
