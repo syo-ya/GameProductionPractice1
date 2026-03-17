@@ -347,15 +347,15 @@ void UpdateBullet()
 					Map[j].BreakFlg = -2;
 					int r = rand() % 100;  
 
-					if (r == 0 || r == 20 || r == 40 || r == 60 || r == 80)
+					if (r == 0)
 					{
 						Map[j].type = ENEMY;
-						r = 50;
+						r = 100;
 					}
 					else if (r == 50)
 					{
 						Map[j].type = FIRE_ENEMY;
-						r = 50;
+						r = 100;
 					}
 					else
 					{

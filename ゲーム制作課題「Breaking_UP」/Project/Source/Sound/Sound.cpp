@@ -14,7 +14,7 @@ void LoadBGM()
 
 void PlayBGM(BGMType type)
 {
-	PlaySoundMem(g_BGMHandle[type], DX_PLAYTYPE_LOOP);
+	//PlaySoundMem(g_BGMHandle[type], DX_PLAYTYPE_LOOP);
 }
 
 void StopBGM(BGMType type)

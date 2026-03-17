@@ -214,14 +214,14 @@ void UpdateEnemy()
 						continue;
 					}
 
-					if (Block[j].type == ENEMY || Block[j].type == FIRE_ENEMY || Block[j].type == SKY_ENEMY)
+					if ((Block[j].type == ENEMY || Block[j].type == FIRE_ENEMY || Block[j].type == SKY_ENEMY) && Map[i].type != SKY_ENEMY)
 					{
 						g_EnemyData[i].move.x = 0;
 					}
 					// è„Ç©ÇÁóéÇøÇƒÇ´ÇΩ
 					if (prevBottom <= blockTop)
 					{
-						if (Block[j].type != ENEMY && Block[j].type != FIRE_ENEMY && Block[j].type != SKY_ENEMY)
+						if (Block[j].type != ENEMY && Block[j].type != FIRE_ENEMY && Block[j].type != SKY_ENEMY && Map[i].type != SKY_ENEMY)
 						{
 							Map[i].pos.y = blockTop - MAP_CHIP_HEIGHT;
 							g_EnemyData[i].move.y = 0.0f;
@@ -240,8 +240,10 @@ void UpdateEnemy()
 					}
 					else
 					{
-						g_EnemyData[i].move.x = 0;
-
+						if (Map[i].type != SKY_ENEMY)
+						{
+							g_EnemyData[i].move.x = 0;
+						}
 					}
 				}
 			}
